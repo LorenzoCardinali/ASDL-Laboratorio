@@ -1,5 +1,11 @@
 package it.unicam.cs.asdl2021.es5;
 
+/**
+ * Promemoria
+ * Iterator<Prenotazione> iterator = prenotazioni.iterator();
+ * iterator.next();
+ */
+
 import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -26,8 +32,6 @@ public class Prove {
         ts1.overlapsWith(ts2);
 
         System.out.println(ts1.toString() );
-        
-
 
         GregorianCalendar g1 = new GregorianCalendar(2019, 10, 4, 11, 00);
         GregorianCalendar g2 = new GregorianCalendar(2019, 10, 4, 12, 00);
@@ -109,7 +113,6 @@ public class Prove {
         a.addFacility(f5);
         b.addFacility(f3);
         b.addFacility(f4);
-
 
         System.out.println("Facilities di A > " + a.getNumeroFacilities());
         System.out.println(a.getFacilities());

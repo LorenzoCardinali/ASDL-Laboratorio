@@ -5,12 +5,6 @@ import java.sql.Time;
 import java.util.*;
 
 /**
- * Promemoria
- * Iterator<Prenotazione> iterator = prenotazioni.iterator();
- * iterator.next();
- */
-
-/**
  * Un oggetto della classe aula rappresenta una certa aula con le sue facilities
  * e le sue prenotazioni.
  *
