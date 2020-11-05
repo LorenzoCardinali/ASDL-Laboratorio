@@ -13,10 +13,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Prove {
     public static void main(String[] args) {
+
         /*
-        //GregorianCalendar g1 = new GregorianCalendar(2019, 10, 4, 11, 00);
-        //GregorianCalendar g2 = new GregorianCalendar(2019, 10, 4, 13, 00);
-        //TimeSlot ts1 = new TimeSlot(g1, g2);
+        GregorianCalendar g1 = new GregorianCalendar(2019, 10, 4, 11, 00);
+        GregorianCalendar g2 = new GregorianCalendar(2019, 10, 4, 13, 00);
+        TimeSlot ts1 = new TimeSlot(g1, g2);
 
         System.out.println("    ");
 
@@ -32,6 +33,7 @@ public class Prove {
         ts1.overlapsWith(ts2);
 
         System.out.println(ts1.toString() );
+        */
 
         GregorianCalendar g1 = new GregorianCalendar(2019, 10, 4, 11, 00);
         GregorianCalendar g2 = new GregorianCalendar(2019, 10, 4, 12, 00);
@@ -76,7 +78,7 @@ public class Prove {
 
         System.out.println(" ");
 
-        /*
+
         //prima B poi A
         TimeSlot ts7 = new TimeSlot(g4, g7);
         TimeSlot ts8 = new TimeSlot(g1, g6);
@@ -84,7 +86,6 @@ public class Prove {
         ts8.overlapsWith(ts7);
 
         System.out.println(" ");
-
 
         //prima A poi B con ora comune
         TimeSlot ts9 = new TimeSlot(g1, g3);
@@ -94,7 +95,6 @@ public class Prove {
         ts10.overlapsWith(ts9);
 
         System.out.println(" ");
-
 
         Facility f1 = new PresenceFacility("HDMI",
                 "Presenza di un proiettore HDMI");
@@ -113,14 +113,5 @@ public class Prove {
         a.addFacility(f5);
         b.addFacility(f3);
         b.addFacility(f4);
-
-        System.out.println("Facilities di A > " + a.getNumeroFacilities());
-        System.out.println(a.getFacilities());
-        System.out.println();
-        System.out.println("Facilities di B > " + b.getNumeroFacilities());
-        System.out.println(b.getFacilities());
-
-        */
-
     }
 }
