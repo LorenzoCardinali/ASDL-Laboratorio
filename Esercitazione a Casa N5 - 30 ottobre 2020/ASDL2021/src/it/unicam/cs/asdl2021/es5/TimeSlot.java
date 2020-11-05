@@ -34,10 +34,8 @@ public class TimeSlot implements Comparable<TimeSlot> {
      *
      * @param start inizio del time slot
      * @param stop  fine del time slot
-     * @throws NullPointerException     se uno dei due istanti, start o
-     *                                  stop, è null
-     * @throws IllegalArgumentException se start è uguale o successivo a
-     *                                  stop
+     * @throws NullPointerException     se uno dei due istanti, start o stop, è null
+     * @throws IllegalArgumentException se start è uguale o successivo a stop
      */
     public TimeSlot(GregorianCalendar start, GregorianCalendar stop) {
         if (start == null) {
