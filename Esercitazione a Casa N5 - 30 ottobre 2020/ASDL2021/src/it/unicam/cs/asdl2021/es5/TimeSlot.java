@@ -2,6 +2,7 @@ package it.unicam.cs.asdl2021.es5;
 
 import com.sun.source.tree.CaseTree;
 
+import javax.xml.transform.SourceLocator;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
@@ -177,77 +178,6 @@ public class TimeSlot implements Comparable<TimeSlot> {
             //overlaps maggiore di MINUTES_OF_TOLERANCE_FOR_OVERLAPPING
             return true;
         }
-
-
-
-
-
-        /*
-        if (o == null)
-            throw new NullPointerException(
-                    "Tentativo di controllare se questo time slot si sovrappone con un time slot nullo");
-        // Controllo tutti i casi di sovrapposizione
-        int cmp1 = this.start.compareTo(o.start);
-        int cmp2 = this.start.compareTo(o.stop);
-        int cmp3 = this.stop.compareTo(o.start);
-        int cmp4 = this.stop.compareTo(o.stop);
-        long overlappingMilliseconds;
-        if (cmp1 <= 0 && cmp3 >= 0 && cmp4 <= 0) {
-            // questo timeslot inizia prima di quello passato e termina dopo che
-            // quello passato è iniziato
-            // this.start ... [o.start ... this.stop] ... o.stop
-            overlappingMilliseconds = this.stop.getTimeInMillis()
-                    - o.start.getTimeInMillis();
-            if (overlappingMilliseconds > MINUTES_OF_TOLERANCE_FOR_OVERLAPPING
-                    * 60 * 1000)
-                // c'è sovrapposizione
-                return true;
-            else // la sovrapposizione non raggiunge la soglia
-                return false;
-        }
-        if (cmp1 <= 0 && cmp4 >= 0) {
-            // questo timeslot inizia prima di quello passato e termina dopo che
-            // quello passato è finito
-            // this.start ... [o.start ... o.stop] ... this.stop
-            overlappingMilliseconds = o.stop.getTimeInMillis()
-                    - o.start.getTimeInMillis();
-            if (overlappingMilliseconds > MINUTES_OF_TOLERANCE_FOR_OVERLAPPING
-                    * 60 * 1000)
-                // c'è sovrapposizione
-                return true;
-            else // la sovrapposizione non raggiunge la soglia
-                return false;
-        }
-
-        if (cmp1 >= 0 && cmp2 <= 0 && cmp4 >= 0) {
-            // questo timeslot inizia dopo di quello passato e termina dopo che
-            // quello passato è terminato
-            // o.start ... [this.start ... o.stop] ... this.stop
-            overlappingMilliseconds = o.stop.getTimeInMillis()
-                    - this.start.getTimeInMillis();
-            if (overlappingMilliseconds > MINUTES_OF_TOLERANCE_FOR_OVERLAPPING
-                    * 60 * 1000)
-                // c'è sovrapposizione
-                return true;
-            else // la sovrapposizione non raggiunge la soglia
-                return false;
-        }
-        if (cmp1 >= 0 && cmp4 <= 0) {
-            // questo timeslot inizia prima di quello passato e termina dopo che
-            // quello passato è finito
-            // o.start ... [this.start ... this.stop] ... o.stop
-            overlappingMilliseconds = this.stop.getTimeInMillis()
-                    - this.start.getTimeInMillis();
-            if (overlappingMilliseconds > MINUTES_OF_TOLERANCE_FOR_OVERLAPPING
-                    * 60 * 1000)
-                // c'è sovrapposizione
-                return true;
-            else // la sovrapposizione non raggiunge la soglia
-                return false;
-        }
-        // non c'è sovrapposizione
-        return false;
-         */
     }
 
     /*
