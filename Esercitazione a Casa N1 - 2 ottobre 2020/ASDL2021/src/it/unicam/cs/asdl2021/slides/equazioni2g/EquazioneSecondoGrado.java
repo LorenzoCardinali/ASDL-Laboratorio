@@ -98,7 +98,7 @@ public class EquazioneSecondoGrado
         return Double.doubleToLongBits(c) == Double.doubleToLongBits(other.c);
     }
 
-    /*
+    /**
      * L'ordinamento naturale naturale tra equazioni di secondo grado segue
      * l'ordinamento dei numeri double. Per prima cosa vengono confrontati i
      * parametri a delle due equazioni. Se sono diversi allora l'equazione con
