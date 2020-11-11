@@ -5,17 +5,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
+import java.util.*;
 
 /**
  * Lista concatenata singola che non accetta valori null, ma permette elementi
  * duplicati.
- * 
- * @author Template: Luca Tesei, Implementazione: collettiva
  *
- * @param <E>
- *                il tipo degli elementi della lista
+ * @param <E> il tipo degli elementi della lista
+ * @author Template: Luca Tesei, Implementazione: collettiva
  */
 public class ASDL2021SingleLinkedList<E> implements List<E> {
+
+    //todo
+    LinkedList<E> list = new LinkedList<E>();
 
     private int size;
 
@@ -55,7 +58,7 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
 
     /*
      * Classe che realizza un iteratore per ASDL2021SingleLinkedList.
-     * L'iteratore deve essere fail-safe, cioè deve lanciare una eccezione
+     * L'iteratore deve essere Fail-Fast, cioè deve lanciare una eccezione
      * IllegalStateException se a una chiamata di next() si "accorge" che la
      * lista è stata cambiata rispetto a quando l'iteratore è stato creato.
      */
@@ -73,14 +76,33 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
 
         @Override
         public boolean hasNext() {
-            // TODO implementare
-            return false;
+            //stato iniziale
+            if (this.lastReturned == null) {
+                if (ASDL2021SingleLinkedList.this.isEmpty()) {
+                    //lista vuota
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            if (this.lastReturned.next == null) {
+                return false;
+            } else {
+                return true;
+            }
         }
 
         @Override
         public E next() {
-            // TODO implementare
-            return null;
+            if (!this.hasNext()) {
+                throw new NoSuchElementException("Non esiste un altro elemento");
+            }
+
+            Node<E> n = this.lastReturned.next;
+            // aggiorno il cursore
+            this.lastReturned = n;
+            return n.item;
         }
 
     }
@@ -97,31 +119,113 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
 
     @Override
     public boolean contains(Object o) {
-        // TODO implementare
-        return false;
+        if (o == null) {
+            throw new NullPointerException("Ricerca nulla.");
+        }
+
+        boolean trovato = false;
+        Node<E> temp = this.head;
+
+        while (temp != null && !trovato) {
+            trovato = o.equals(temp.item);
+            temp = temp.next;
+        }
+
+        return trovato;
     }
 
     @Override
     public boolean add(E e) {
-        // TODO implementare
-        return false;
+        if (e == null) {
+            throw new NullPointerException("Elemento inserito nullo.");
+        }
+
+        Node n = new Node(e, null);
+
+        if (this.size == 0) {
+            head = n;
+        } else {
+            tail.next = n;
+        }
+        tail = n;
+        this.size++;
+        this.numeroModifiche++;
+
+        return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        // TODO implementare
-        return false;
+        // TODO controllare
+
+        if (o == null) {
+            throw new NullPointerException("Oggetto inserito nullo.");
+        }
+
+        boolean rimosso = false;
+
+        if (size == 0) return false;
+
+        if (head.item.equals(o)) {
+            head = head.next;
+            this.numeroModifiche++;
+            return true;
+        }
+
+        for (Node<E> n = head; n != null; n = n.next) {
+            if (n.next.equals(o)) {
+                if (n.next.next != null) {
+                    n.next = n.next.next;
+                    n.next.next = null;
+                } else {
+                    n.next = tail;
+                    tail = n;
+                }
+                size--;
+                this.numeroModifiche++;
+                rimosso = true;
+            }
+        }
+
+        return rimosso;
     }
 
     @Override
     public void clear() {
-        // TODO implementare
+        // TODO controllare
+
+        for (Node<E> x = head; x != null; ) {
+            Node<E> next = x.next;
+            x.item = null;
+            x.next = null;
+            x = next;
+        }
+
+        head = tail = null;
+        size = 0;
+        this.numeroModifiche++;
     }
 
     @Override
     public E get(int index) {
-        // TODO implementare
-        return null;
+        // TODO controllare
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Index oversized");
+        }
+
+        int i = 0;
+        Node<E> temp = head;
+        Node<E> nodo = null;
+
+        while (nodo == null) {
+            if (index == i) {
+                nodo = temp;
+            }
+            temp = temp.next;
+            i++;
+        }
+
+        return nodo.item;
     }
 
     @Override
@@ -152,13 +256,17 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
         // TODO implementare
         return -1;
     }
-    
+
     @Override
     public Object[] toArray() {
-        // TODO implementare
-        return null;
+        Object[] list = new Object[size];
+        int i = 0;
+        for (Node<E> x = head; x != null; x = x.next) {
+            list[i++] = x.item;
+        }
+        return list;
     }
-    
+
     @Override
     public Iterator<E> iterator() {
         return new Itr();
