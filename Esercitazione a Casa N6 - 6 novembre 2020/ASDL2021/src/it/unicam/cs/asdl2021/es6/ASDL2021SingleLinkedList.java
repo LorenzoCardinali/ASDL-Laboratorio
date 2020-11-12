@@ -95,6 +95,10 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
 
         @Override
         public E next() {
+            if (this.numeroModificheAtteso != ASDL2021SingleLinkedList.this.numeroModifiche) {
+                throw new IllegalArgumentException("Errore, c'è stata una modifica inaspettata.");
+            }
+
             if (!this.hasNext()) {
                 throw new NoSuchElementException("Non esiste un altro elemento");
             }
@@ -168,6 +172,7 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
 
         if (head.item.equals(o)) {
             head = head.next;
+            size--;
             this.numeroModifiche++;
             return true;
         }
@@ -209,6 +214,7 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
     @Override
     public E get(int index) {
         // TODO controllare
+
         if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException("Index oversized");
         }
@@ -230,31 +236,147 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
 
     @Override
     public E set(int index, E element) {
-        // TODO implementare
+        // TODO controllare
+
+        if (element == null) {
+            throw new NullPointerException("Tentativo di inserire un elemento nullo");
+        }
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Index oversized");
+        }
+
+        Node<E> n = head;
+        for (int i = 0; i != index; i++) {
+            if (i == index) {
+                n.item = element;
+                this.numeroModifiche++;
+            }
+            n = n.next;
+        }
+
         return null;
     }
 
     @Override
     public void add(int index, E element) {
-        // TODO implementare
+        // TODO controllare
+
+        if (element == null) {
+            throw new NullPointerException("Tentativo di inserire un elemento nullo");
+        }
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Index oversized");
+        }
+
+        if (this.size == index) {
+            this.add(element);
+            return;
+        }
+
+        //aggiunta nuova testa (index == 0)
+        if (index == 0) {
+            Node<E> testa = new Node(element, this.head);
+            this.head = testa;
+            this.size++;
+            this.numeroModifiche++;
+            return;
+        }
+
+        Node<E> n = this.head;
+
+        for (int i = 0; i != size; i++) {
+            if (i == index - 1) {
+                Node<E> elemento = new Node(element, n.next);
+                n.next = elemento;
+                this.size++;
+                this.numeroModifiche++;
+                return;
+            }
+
+            n = n.next;
+        }
     }
 
     @Override
     public E remove(int index) {
-        // TODO implementare
-        return null;
+        // TODO controllare
+
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Index oversized");
+        }
+
+        E element = null;
+
+        //caso in cui c'è solo un elemento
+        if (this.size-1 == index) {
+            element = head.item;
+            this.clear();
+        } else {
+            Node<E> n = this.head;
+
+            for (int i = 0; i != size; i++) {
+                if (i == index-1) {
+                    element = n.next.item;
+                    n.next = n.next.next;
+                    n.next.next = null;
+                }
+
+                n = n.next;
+            }
+        }
+
+        this.numeroModifiche++;
+        return element;
     }
 
     @Override
     public int indexOf(Object o) {
-        // TODO implementare
-        return -1;
+        // TODO controllare
+
+        if (o == null) {
+            throw new NullPointerException("Oggetto inserito nullo.");
+        }
+
+        if (!contains(o)) {
+            return -1;
+        }
+
+        int posizione = -1;
+        Node<E> n = this.head;
+
+        for (int i = 0; i != size && posizione != -1; i++) {
+            if (o.equals(n.item)) {
+                posizione = i;
+            }
+            n = n.next;
+        }
+
+        return posizione;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        // TODO implementare
-        return -1;
+        // TODO controllare
+
+        if (o == null) {
+            throw new NullPointerException("Oggetto inserito nullo.");
+        }
+
+        if (!contains(o)) {
+            return -1;
+        }
+
+        int posizione = -1;
+        Node<E> n = this.head;
+
+        for (int i = 0; i != size; i++) {
+            if (o.equals(n.item)) {
+                posizione = i;
+            }
+            n = n.next;
+        }
+
+        return posizione;
     }
 
     @Override
