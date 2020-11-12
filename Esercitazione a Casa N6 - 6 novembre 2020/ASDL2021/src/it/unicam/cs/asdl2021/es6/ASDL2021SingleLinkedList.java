@@ -308,24 +308,33 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
         }
 
         E element = null;
+        Node<E> n = this.head;
 
         //caso in cui c'è solo un elemento
-        if (this.size-1 == index) {
+        if (this.size - 1 == index  && index == 0) {
             element = head.item;
             this.clear();
-        } else {
-            Node<E> n = this.head;
+        } else //caso in cui il remove rimuove il primo elemento (index == 0)
+            if (index == 0) {
+                element = head.item;
+                head.item = head.next.item;
+                head.next = head.next.next;
+            } else { //resto dei casi
+                for (int i = 0; i != size; i++) {
+                    if (i == index - 1) {
+                        element = n.next.item;
+                        n.next.item = null;
+                        n.next = n.next.next;
+                        n.next.next = null;
+                        if (index == size-1) { //se l'elemento da rimuovere è anche il tail (index == size-1)
+                            tail.item = n.item;
+                            tail.next = n.next;
+                        }
+                    }
 
-            for (int i = 0; i != size; i++) {
-                if (i == index-1) {
-                    element = n.next.item;
-                    n.next = n.next.next;
-                    n.next.next = null;
+                    n = n.next;
                 }
-
-                n = n.next;
             }
-        }
 
         this.numeroModifiche++;
         return element;

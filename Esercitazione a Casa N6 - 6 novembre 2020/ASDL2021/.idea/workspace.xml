@@ -4,7 +4,6 @@
     <list default="true" id="0537391a-e907-4616-a57d-2ad72055e41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/it/unicam/cs/asdl2021/es6/ASDL2021SingleLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/unicam/cs/asdl2021/es6/ASDL2021SingleLinkedList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/unicam/cs/asdl2021/es6/ASDL2021SingleLinkedListTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +84,19 @@
       <option name="presentableId" value="Default" />
       <updated>1605030392580</updated>
     </task>
+    <task id="LOCAL-00001" summary="test">
+      <created>1605194269262</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1605194269262</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="194" width="1092" height="715" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605182629459">
@@ -96,10 +107,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="765" y="246" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.60.1440.900@0.0.1920.1080" timestamp="1605102010029" />
-    <state x="428" y="108" key="CommitChangelistDialog2" timestamp="1605182914919">
+    <state x="428" y="108" key="CommitChangelistDialog2" timestamp="1605194268705">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="428" y="108" key="CommitChangelistDialog2/0.0.1920.1080/1920.60.1440.900@0.0.1920.1080" timestamp="1605182914919" />
+    <state x="428" y="108" key="CommitChangelistDialog2/0.0.1920.1080/1920.60.1440.900@0.0.1920.1080" timestamp="1605194268705" />
     <state width="1877" height="287" key="GridCell.Tab.0.bottom" timestamp="1605089879669">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
