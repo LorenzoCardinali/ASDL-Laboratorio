@@ -166,9 +166,11 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
             throw new NullPointerException("Oggetto inserito nullo.");
         }
 
-        boolean rimosso = false;
+        if (!contains(o) || size == 0) {
+            return false;
+        }
 
-        if (size == 0) return false;
+        boolean rimosso = false;
 
         if (head.item.equals(o)) {
             head = head.next;
@@ -177,7 +179,7 @@ public class ASDL2021SingleLinkedList<E> implements List<E> {
             return true;
         }
 
-        for (Node<E> n = head; n != null; n = n.next) {
+        for (Node<E> n = head; n != null || !rimosso; n = n.next) {
             if (n.next.equals(o)) {
                 if (n.next.next != null) {
                     n.next = n.next.next;
