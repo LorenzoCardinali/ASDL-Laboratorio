@@ -10,11 +10,9 @@ import java.util.NoSuchElementException;
 /**
  * Lista concatenata singola che non accetta valori null, ma permette elementi
  * duplicati.
- * 
- * @author Luca Tesei
  *
- * @param <E>
- *                il tipo degli elementi della lista
+ * @param <E> il tipo degli elementi della lista
+ * @author Luca Tesei
  */
 public class ASDL2021SingleLinkedList<E> implements List<E> {
 

@@ -7,12 +7,9 @@ import java.util.List;
 /**
  * Classe che implementa uno heap binario che può contenere elementi non nulli
  * possibilmente ripetuti.
- * 
- * @author Template: Luca Tesei, Implementation: collettiva
  *
- * @param <E>
- *                il tipo degli elementi dello heap, che devono avere un
- *                ordinamento naturale.
+ * @param <E> il tipo degli elementi dello heap, che devono avere un ordinamento naturale.
+ * @author Template: Luca Tesei, Implementation: collettiva
  */
 public class MaxHeap<E extends Comparable<E>> {
 
@@ -30,7 +27,7 @@ public class MaxHeap<E extends Comparable<E>> {
 
     /**
      * Restituisce il numero di elementi nello heap.
-     * 
+     *
      * @return il numero di elementi nello heap
      */
     public int size() {
@@ -39,7 +36,7 @@ public class MaxHeap<E extends Comparable<E>> {
 
     /**
      * Determina se lo heap è vuoto.
-     * 
+     *
      * @return true se lo heap è vuoto.
      */
     public boolean isEmpty() {
@@ -48,25 +45,30 @@ public class MaxHeap<E extends Comparable<E>> {
 
     /**
      * Costruisce uno heap a partire da una lista di elementi.
-     * 
-     * @param list
-     *                 lista di elementi
+     *
+     * @param list lista di elementi
      */
     public MaxHeap(List<E> list) {
         // TODO implementare
+        if (list == null) {
+            throw new NullPointerException("Lista nulla.");
+        }
+
+        for (E i : list) {
+
+        }
     }
 
     /**
      * Inserisce un elemento nello heap
-     * 
-     * @param el
-     *               l'elemento da inserire
-     * @throws NullPointerException
-     *                                  se l'elemento è null
-     * 
+     *
+     * @param el l'elemento da inserire
+     * @throws NullPointerException se l'elemento è null
      */
     public void insert(E el) {
         // TODO implementare
+
+
     }
 
     /*
@@ -75,8 +77,11 @@ public class MaxHeap<E extends Comparable<E>> {
      * la radice dello heap.
      */
     private int leftIndex(int i) {
-        // TODO implementare
-        return -1;
+        if (heap.size() - 1 < i || i < 0) {
+            throw new IllegalArgumentException("Index non valido");
+        }
+
+        return i * 2 + 1;
     }
 
     /*
@@ -85,8 +90,11 @@ public class MaxHeap<E extends Comparable<E>> {
      * la radice dello heap.
      */
     private int rightIndex(int i) {
-        // TODO implementare
-        return -1;
+        if (heap.size() - 1 < i || i < 0) {
+            throw new IllegalArgumentException("Index non valido");
+        }
+
+        return i * 2 + 2;
     }
 
     /*
@@ -95,28 +103,36 @@ public class MaxHeap<E extends Comparable<E>> {
      * la radice dello heap.
      */
     private int parentIndex(int i) {
-        // TODO implementare
-        return -1;
+        if (heap.size() - 1 < i || i < 0) {
+            throw new IllegalArgumentException("Index non valido");
+        }
+
+        return (i - 1) / 2;
     }
 
     /**
      * Ritorna l'elemento massimo senza toglierlo.
-     * 
+     *
      * @return l'elemento massimo dello heap oppure null se lo heap è vuoto
      */
     public E getMax() {
-        // TODO implementare
-        return null;
+        if(heap.isEmpty()) {
+            return null;
+        } else {
+            return heap.get(0);
+        }
     }
 
     /**
-     * Estrae l'elemento massimo dallo heap. Dopo la chiamata tale elemento non
-     * è più presente nello heap.
-     * 
+     * Estrae l'elemento massimo dallo heap.
+     * Dopo la chiamata tale elemento non è più presente nello heap.
+     *
      * @return l'elemento massimo di questo heap.
      */
     public E extractMax() {
         // TODO implementare
+
+
         return null;
     }
 
@@ -126,5 +142,9 @@ public class MaxHeap<E extends Comparable<E>> {
      */
     private void heapify(int i) {
         // TODO implementare
+        if (heap.size() - 1 < i || i < 0) {
+            throw new IllegalArgumentException("Index non valido");
+        }
+
     }
 }

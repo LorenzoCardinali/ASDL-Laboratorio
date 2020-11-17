@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package it.unicam.cs.asdl2021.es7;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Classe che implementa un algoritmo di ordinamento basato su heap.
- * 
+ *
  * @author Template: Luca Tesei, Implementation: collettiva
  *
  */
