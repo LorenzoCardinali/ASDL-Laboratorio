@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class MaxHeap<E extends Comparable<E>> {
 
+
     /*
      * L'array che serve come base per lo heap
      */
@@ -54,9 +55,13 @@ public class MaxHeap<E extends Comparable<E>> {
             throw new NullPointerException("Lista nulla.");
         }
 
-        for (E i : list) {
+        heap.clear();
 
+        for (E i : list) {
+            heap.add(i);
         }
+
+        System.out.println(heap.toString());
     }
 
     /**
@@ -116,7 +121,7 @@ public class MaxHeap<E extends Comparable<E>> {
      * @return l'elemento massimo dello heap oppure null se lo heap è vuoto
      */
     public E getMax() {
-        if(heap.isEmpty()) {
+        if (heap.isEmpty()) {
             return null;
         } else {
             return heap.get(0);
@@ -132,6 +137,7 @@ public class MaxHeap<E extends Comparable<E>> {
     public E extractMax() {
         // TODO implementare
 
+        swap(0, heap.size() - 1);
 
         return null;
     }
@@ -146,5 +152,12 @@ public class MaxHeap<E extends Comparable<E>> {
             throw new IllegalArgumentException("Index non valido");
         }
 
+    }
+
+    private void swap(int fpos, int spos) {
+        E tmp;
+        tmp = heap.get(fpos);
+        heap.set(fpos, heap.get(spos));
+        heap.set(spos, tmp);
     }
 }
