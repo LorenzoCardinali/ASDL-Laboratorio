@@ -50,18 +50,22 @@ public class MaxHeap<E extends Comparable<E>> {
      * @param list lista di elementi
      */
     public MaxHeap(List<E> list) {
-        // TODO implementare
-        if (list == null) {
-            throw new NullPointerException("Lista nulla.");
+        if (list.isEmpty()) {
+            throw new NullPointerException("Lista vuota");
         }
 
         heap.clear();
 
-        for (E i : list) {
-            heap.add(i);
+        for (E tmp : list) {
+            heap.add(tmp);
         }
 
-        System.out.println(heap.toString());
+        //index dell'ultimo nodo
+        int last = parentIndex(heap.size() - 1);
+
+        for (int i = last; i >= 0; i--) {
+            heapify(i);
+        }
     }
 
     /**
@@ -71,9 +75,18 @@ public class MaxHeap<E extends Comparable<E>> {
      * @throws NullPointerException se l'elemento è null
      */
     public void insert(E el) {
-        // TODO implementare
+        if (el == null) {
+            throw new NullPointerException("Elemento nullo");
+        }
 
+        heap.add(el);
 
+        //index dell'ultimo nodo
+        int last = parentIndex(heap.size() - 1);
+
+        for (int i = last; i >= 0; i--) {
+            heapify(i);
+        }
     }
 
     /*
@@ -135,11 +148,14 @@ public class MaxHeap<E extends Comparable<E>> {
      * @return l'elemento massimo di questo heap.
      */
     public E extractMax() {
-        // TODO implementare
+        E tmp = heap.get(0);
 
         swap(0, heap.size() - 1);
+        heap.remove(heap.size() - 1);
 
-        return null;
+        heapify(0);
+
+        return tmp;
     }
 
     /*
@@ -147,17 +163,47 @@ public class MaxHeap<E extends Comparable<E>> {
      * suoi sottoalberi sinistro e destro (se esistono) siano heap.
      */
     private void heapify(int i) {
-        // TODO implementare
         if (heap.size() - 1 < i || i < 0) {
             throw new IllegalArgumentException("Index non valido");
         }
 
+        if (isLeaf(i)) return;
+
+        int left = leftIndex(i), right = rightIndex(i);
+
+        if (left == heap.size() - 1) {
+            if (heap.get(i).compareTo(heap.get(left)) < 0) {
+                swap(i, left);
+                heapify(left);
+            }
+        } else if (heap.get(i).compareTo(heap.get(left)) < 0 || heap.get(i).compareTo(heap.get(right)) < 0) {
+            if (heap.get(left).compareTo(heap.get(right)) > 0) {
+                swap(i, left);
+                heapify(left);
+            } else {
+                swap(i, right);
+                heapify(right);
+            }
+        }
     }
 
+    /*
+     * Scambia 2 nodi
+     */
     private void swap(int fpos, int spos) {
         E tmp;
         tmp = heap.get(fpos);
         heap.set(fpos, heap.get(spos));
         heap.set(spos, tmp);
+    }
+
+    /*
+     * return true se la posizione i è una foglia
+     */
+    private boolean isLeaf(int i) {
+        if (i >= (heap.size() / 2) && i <= heap.size()) {
+            return true;
+        }
+        return false;
     }
 }
