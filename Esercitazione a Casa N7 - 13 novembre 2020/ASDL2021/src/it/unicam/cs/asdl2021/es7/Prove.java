@@ -63,7 +63,7 @@ class Prove {
 
     private static void heapify(int i) {
         // TODO implementare
-        if (heap.size() - 1 < i || i < 0) {
+        if (heap.size() < i || i < 0) {
             throw new IllegalArgumentException("Index non valido");
         }
 
@@ -133,6 +133,18 @@ class Prove {
         }
     }
 
+    public static List sort(List<Integer> list) {
+        MaxHeap(list);
+
+        List<Integer> riordino = new ArrayList<>();
+
+        while(heap.size() > 0) {
+            riordino.add(extractMax());
+        }
+
+        return riordino;
+    }
+
 
     public static void main(String[] args) {
 
@@ -192,33 +204,36 @@ class Prove {
         test.add(17);
 
         System.out.println("test list: " + test.toString());
-        MaxHeap(test);
+        test = sort(test);
         System.out.println("heap list: " + heap.toString());
-        System.out.println("inserisco 25");
-        insert(25);
-        System.out.println("heap list: " + heap.toString());
-
-        System.out.println("#######");
-
-        System.out.println("inserisco 25");
-        insert(25);
-        System.out.println("heap list: " + heap.toString());
-
-        System.out.println("#######");
-
-        System.out.println("rimuovo max");
-        System.out.println("Max: " + extractMax());
-        System.out.println("heap list: " + heap.toString());
-
-        System.out.println("#######");
-
-        System.out.println("rimuovo max");
-        System.out.println("Max: " + extractMax());
-        System.out.println("heap list: " + heap.toString());
-
-
+        System.out.println("test list: " + test.toString());
 
         /*
+        System.out.println("inserisco 25");
+        insert(25);
+        System.out.println("heap list: " + heap.toString());
+
+        System.out.println("#######");
+
+        System.out.println("inserisco 25");
+        insert(25);
+        System.out.println("heap list: " + heap.toString());
+
+        System.out.println("#######");
+
+        System.out.println("rimuovo max");
+        System.out.println("Max: " + extractMax());
+        System.out.println("heap list: " + heap.toString());
+
+        System.out.println("#######");
+
+        System.out.println("rimuovo max");
+        System.out.println("Max: " + extractMax());
+        System.out.println("heap list: " + heap.toString());
+
+
+
+
         System.out.println(parentIndex(10));
         System.out.println(rightIndex(parentIndex(10)));
         System.out.println(leftIndex(parentIndex(10)));

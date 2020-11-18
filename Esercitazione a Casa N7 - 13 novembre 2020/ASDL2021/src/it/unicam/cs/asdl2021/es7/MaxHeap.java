@@ -163,7 +163,7 @@ public class MaxHeap<E extends Comparable<E>> {
      * suoi sottoalberi sinistro e destro (se esistono) siano heap.
      */
     private void heapify(int i) {
-        if (heap.size() - 1 < i || i < 0) {
+        if (heap.size() < i || i < 0) {
             throw new IllegalArgumentException("Index non valido");
         }
 
