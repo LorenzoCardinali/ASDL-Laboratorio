@@ -1,11 +1,6 @@
 package it.unicam.cs.asdl2021.es6sol;
 
-import java.util.Collection;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * Lista concatenata singola che non accetta valori null, ma permette elementi
@@ -15,6 +10,9 @@ import java.util.NoSuchElementException;
  * @author Luca Tesei
  */
 public class ASDL2021SingleLinkedList<E> implements List<E> {
+
+    //todo
+    LinkedList<E> list = new LinkedList<E>();
 
     private int size;
 
