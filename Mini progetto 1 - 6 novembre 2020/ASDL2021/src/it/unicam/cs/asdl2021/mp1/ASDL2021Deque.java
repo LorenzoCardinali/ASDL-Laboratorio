@@ -26,7 +26,7 @@ import java.util.*;
  *
  * @author Template: Luca Tesei, Implementation:
  *
- *  Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
+ * Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
  *
  */
 public class ASDL2021Deque<E> implements Deque<E> {

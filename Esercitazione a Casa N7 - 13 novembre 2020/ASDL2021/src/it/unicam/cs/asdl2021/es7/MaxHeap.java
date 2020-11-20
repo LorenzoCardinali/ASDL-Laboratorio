@@ -53,7 +53,8 @@ public class MaxHeap<E extends Comparable<E>> {
             throw new NullPointerException("Lista vuota");
         }
 
-        heap.clear();
+        //inizializzo heap
+        this.heap = new ArrayList<E>();
 
         for (E tmp : list) {
             heap.add(tmp);
@@ -147,6 +148,10 @@ public class MaxHeap<E extends Comparable<E>> {
      * @return l'elemento massimo di questo heap.
      */
     public E extractMax() {
+        if(heap.isEmpty()) {
+            return null;
+        }
+
         E tmp = heap.get(0);
 
         swap(0, heap.size() - 1);
@@ -173,7 +178,7 @@ public class MaxHeap<E extends Comparable<E>> {
         if (left == heap.size() - 1) {
             if (heap.get(i).compareTo(heap.get(left)) < 0) {
                 swap(i, left);
-                heapify(left);
+                return;
             }
         } else if (heap.get(i).compareTo(heap.get(left)) < 0 || heap.get(i).compareTo(heap.get(right)) < 0) {
             if (heap.get(left).compareTo(heap.get(right)) > 0) {
@@ -204,5 +209,14 @@ public class MaxHeap<E extends Comparable<E>> {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Only for JUnit testing purposes.
+     *
+     * @return the arraylist representing this max heap
+     */
+    protected ArrayList<E> getHeap() {
+        return this.heap;
     }
 }

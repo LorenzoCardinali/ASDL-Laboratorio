@@ -15,8 +15,8 @@ package it.unicam.cs.asdl2021.mp1;
  * NOT a string of balanced parentheses - "( ( \n [(P)] \t ))" is NOT a string
  * of balanced parentheses
  *
- * @author Template: Luca Tesei, Implementation: INSERIRE NOME E COGNOME DELLO
- * <p>
+ * @author Template: Luca Tesei, Implementation:
+ *
  * Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
  */
 public class BalancedParenthesesChecker {
