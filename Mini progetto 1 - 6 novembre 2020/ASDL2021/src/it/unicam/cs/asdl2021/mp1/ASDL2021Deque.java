@@ -53,13 +53,10 @@ public class ASDL2021Deque<E> implements Deque<E> {
      */
     private int numeroModifiche;
 
-    // TODO implement: possibly insert other private fields that may be needed for implementation
-
     /**
      * Constructs an empty deque.
      */
     public ASDL2021Deque() {
-
         //Inizializzo tutte le variabili
         this.size = 0;
         this.first = null;
@@ -69,21 +66,19 @@ public class ASDL2021Deque<E> implements Deque<E> {
 
     @Override
     public boolean isEmpty() {
-
         //Ritorna vero se il size è uguale a 0
         return this.size == 0;
     }
 
     @Override
     public Object[] toArray() {
-
-        //Inizializzo array da inviare
+        //Inizializzo contatore e array da inviare
         Object[] array = new Object[this.size];
         int i = 0;
 
         //Inserisco ogni singolo elemento della Deque
-        for (E tmp : this) {
-            array[i] = tmp;
+        for (Node<E> tmp = first; tmp != null; tmp = tmp.next) {
+            array[i] = tmp.item;
             i++;
         }
         return array;
@@ -157,12 +152,18 @@ public class ASDL2021Deque<E> implements Deque<E> {
 
     @Override
     public void addFirst(E e) {
+        if (e == null) {
+            throw new NullPointerException("Elemento nullo.");
+        }
         //Sono equivalenti ma non ritorna un boolean
         offerFirst(e);
     }
 
     @Override
     public void addLast(E e) {
+        if (e == null) {
+            throw new NullPointerException("Elemento nullo.");
+        }
         //Sono equivalenti ma non ritorna un boolean
         offerLast(e);
     }
@@ -478,24 +479,54 @@ public class ASDL2021Deque<E> implements Deque<E> {
      * method <code>next()</code> is done.
      */
     private class Itr implements Iterator<E> {
-        // TODO implement: insert private fields needed for the implementation
-        // and for making the iterator fail-safe
+
+        private Node<E> lastReturned;
+
+        private int modifiche;
 
         Itr() {
-            // TODO implement
+            //Inizializzazione Iteratore
+            this.lastReturned = null;
+            this.modifiche = ASDL2021Deque.this.numeroModifiche;
         }
 
         public boolean hasNext() {
-            // TODO implement
-            return false;
+            //stato iniziale
+            if (this.lastReturned == null) {
+                if (ASDL2021Deque.this.first != null) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else { //l'iteratore si è mosso almeno una volta
+                if (this.lastReturned.next != null) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
 
         public E next() {
-            // TODO implement: REMEMBER that the iterator must be fail-safe: if
-            // the Deque has been modified by a method of the main class the
-            // first attempt to call next() must throw a
-            // ConcurrentModificationException
-            return null;
+            //compare numero modifiche per confermare il "fail-safe"
+            if (this.modifiche != ASDL2021Deque.this.numeroModifiche) {
+                throw new ConcurrentModificationException("Errore, c'è stata una modifica inaspettata.");
+            }
+
+            //controllo che ci sia un next
+            if (!this.hasNext()) {
+                throw new NoSuchElementException("Non esiste un altro elemento");
+            }
+
+            //stato iniziale
+            if (lastReturned == null) {
+                lastReturned = ASDL2021Deque.this.first;
+            } else { //l'iteratore si è mosso almeno una volta
+                lastReturned = lastReturned.next;
+            }
+
+            //ritorno next item
+            return lastReturned.item;
         }
     }
 
@@ -512,24 +543,53 @@ public class ASDL2021Deque<E> implements Deque<E> {
      * method <code>next()</code> is done.
      */
     private class DescItr implements Iterator<E> {
-        // TODO implement: insert private fields needed for the implementation
-        // and for making the iterator fail-safe
+
+        private Node<E> lastReturned;
+
+        private int modifiche;
 
         DescItr() {
-            // TODO implement
+            this.lastReturned = null;
+            this.modifiche = ASDL2021Deque.this.numeroModifiche;
         }
 
         public boolean hasNext() {
-            // TODO implement
-            return false;
+            //stato iniziale
+            if (this.lastReturned == null) {
+                if (ASDL2021Deque.this.last != null) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else { //l'iteratore si è mosso almeno una volta
+                if (this.lastReturned.prev != null) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
 
         public E next() {
-            // TODO implement: REMEMBER that the iterator must be fail-safe: if
-            // the Deque has been modified by a method of the main class the
-            // first attempt to call next() must throw a
-            // ConcurrentModificationException
-            return null;
+            //compare numero modifiche per confermare il "fail-safe"
+            if (this.modifiche != ASDL2021Deque.this.numeroModifiche) {
+                throw new ConcurrentModificationException("Errore, c'è stata una modifica inaspettata.");
+            }
+
+            //controllo che ci sia un prev
+            if (!this.hasNext()) {
+                throw new NoSuchElementException("Non esiste un altro elemento");
+            }
+
+            //stato iniziale
+            if (lastReturned == null) {
+                lastReturned = ASDL2021Deque.this.last;
+            } else { //l'iteratore si è mosso almeno una volta
+                lastReturned = lastReturned.prev;
+            }
+
+            //ritorno prev item
+            return lastReturned.item;
         }
 
     }

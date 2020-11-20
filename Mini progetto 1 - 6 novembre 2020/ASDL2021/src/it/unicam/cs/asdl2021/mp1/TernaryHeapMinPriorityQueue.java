@@ -13,10 +13,10 @@ import java.util.NoSuchElementException;
  * possible to insert new elements and the number of elements is unbound.
  * Duplicated elements are permitted while <code>null</code> elements are not
  * permitted.
- * 
- * @author Template: Luca Tesei, Implementation: INSERIRE NOME E COGNOME DELLO
- *         STUDENTE - INSERIRE ANCHE L'EMAIL xxxx@studenti.unicam.it
  *
+ * @author Template: Luca Tesei, Implementation: INSERIRE NOME E COGNOME DELLO
+ * <p>
+ * Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
  */
 public class TernaryHeapMinPriorityQueue {
 
@@ -39,7 +39,7 @@ public class TernaryHeapMinPriorityQueue {
 
     /**
      * Return the current size of this queue.
-     * 
+     *
      * @return the number of elements currently in this queue.
      */
     public int size() {
@@ -51,11 +51,9 @@ public class TernaryHeapMinPriorityQueue {
      * associated with the element will be used to place it in the correct
      * position in the ternary heap. The handle of the element will also be set
      * accordingly.
-     * 
-     * @param element
-     *                    the new element to add
-     * @throws NullPointerException
-     *                                  if the element passed is null
+     *
+     * @param element the new element to add
+     * @throws NullPointerException if the element passed is null
      */
     public void insert(PriorityQueueElement element) {
         // TODO implement
@@ -64,11 +62,9 @@ public class TernaryHeapMinPriorityQueue {
     /**
      * Returns the current minimum element of this min-priority queue without
      * extracting it. This operation does not affect the ternary heap.
-     * 
+     *
      * @return the current minimum element of this min-priority queue
-     * 
-     * @throws NoSuchElementException
-     *                                    if this min-priority queue is empty
+     * @throws NoSuchElementException if this min-priority queue is empty
      */
     public PriorityQueueElement minimum() {
         // TODO implement
@@ -78,10 +74,9 @@ public class TernaryHeapMinPriorityQueue {
     /**
      * Extract the current minimum element from this min-priority queue. The
      * ternary heap will be updated accordingly.
-     * 
+     *
      * @return the current minimum element
-     * @throws NoSuchElementException
-     *                                    if this min-priority queue is empty
+     * @throws NoSuchElementException if this min-priority queue is empty
      */
     public PriorityQueueElement extractMinimum() {
         // TODO implement
@@ -93,23 +88,18 @@ public class TernaryHeapMinPriorityQueue {
      * queue. The position of the element in the ternary heap must be changed
      * accordingly. The changed element may become the minimum element. The
      * handle of the element will also be changed accordingly.
-     * 
-     * @param element
-     *                        the element whose priority will be decreased, it
-     *                        must currently be inside this min-priority queue
-     * @param newPriority
-     *                        the new priority to assign to the element
-     * 
-     * @throws NoSuchElementException
-     *                                      if the element is not currently
-     *                                      present in this min-priority queue
-     * @throws IllegalArgumentException
-     *                                      if the specified newPriority is not
-     *                                      strictly less than the current
-     *                                      priority of the element
+     *
+     * @param element     the element whose priority will be decreased, it
+     *                    must currently be inside this min-priority queue
+     * @param newPriority the new priority to assign to the element
+     * @throws NoSuchElementException   if the element is not currently
+     *                                  present in this min-priority queue
+     * @throws IllegalArgumentException if the specified newPriority is not
+     *                                  strictly less than the current
+     *                                  priority of the element
      */
     public void decreasePriority(PriorityQueueElement element,
-            double newPriority) {
+                                 double newPriority) {
         // TODO implement
     }
 

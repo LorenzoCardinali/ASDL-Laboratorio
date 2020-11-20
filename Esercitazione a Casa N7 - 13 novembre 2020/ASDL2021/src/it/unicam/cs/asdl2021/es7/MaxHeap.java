@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class MaxHeap<E extends Comparable<E>> {
 
-
     /*
      * L'array che serve come base per lo heap
      */

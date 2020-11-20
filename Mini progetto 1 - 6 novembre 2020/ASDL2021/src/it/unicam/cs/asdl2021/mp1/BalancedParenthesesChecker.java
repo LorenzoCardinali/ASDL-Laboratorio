@@ -6,18 +6,18 @@ package it.unicam.cs.asdl2021.mp1;
  * characters: '(', ')', '[', ']', '{', '}' in any order is a string of balanced
  * parentheses or not. The input is given as a String in which white spaces,
  * tabs and newlines are ignored.
- * 
+ * <p>
  * Some examples:
- * 
+ * <p>
  * - " (( [( {\t (\t) [ ] } ) \n ] ) ) " is a string o balanced parentheses - " " is a
  * string of balanced parentheses - "(([)])" is NOT a string of balanced
  * parentheses - "( { } " is NOT a string of balanced parentheses - "}(([]))" is
  * NOT a string of balanced parentheses - "( ( \n [(P)] \t ))" is NOT a string
  * of balanced parentheses
- * 
- * @author Template: Luca Tesei, Implementation: INSERIRE NOME E COGNOME DELLO
- *         STUDENTE - INSERIRE ANCHE L'EMAIL xxxx@studenti.unicam.it
  *
+ * @author Template: Luca Tesei, Implementation: INSERIRE NOME E COGNOME DELLO
+ * <p>
+ * Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
  */
 public class BalancedParenthesesChecker {
 
@@ -35,21 +35,60 @@ public class BalancedParenthesesChecker {
      * Check if a given string contains a balanced parentheses sequence of
      * characters '(', ')', '[', ']', '{', '}' by ignoring white spaces ' ',
      * tabs '\t' and newlines '\n'.
-     * 
-     * @param s
-     *              the string to check
+     *
+     * @param s the string to check
      * @return true if s contains a balanced parentheses sequence, false
-     *         otherwise
-     * @throws IllegalArgumentException
-     *                                      if s contains at least a character
-     *                                      different form:'(', ')', '[', ']',
-     *                                      '{', '}', white space ' ', tab '\t'
-     *                                      and newline '\n'
+     * otherwise
+     * @throws IllegalArgumentException if s contains at least a character
+     *                                  different form:'(', ')', '[', ']',
+     *                                  '{', '}', white space ' ', tab '\t'
+     *                                  and newline '\n'
      */
     public boolean check(String s) {
-        // TODO implement - NOTE: the stack must be cleared first every time
-        // this method is called. Then it has to be used to perform the check.
-        return false;
+        //rimuovo caratteri ignorati (spazi, \n e \t)
+        s = s.replaceAll("\\s+|\\t+|\\n+", "");
+
+        //loop stringa
+        for (int i = 0; i < s.length(); i++) {
+            char tmp = s.charAt(i);
+
+            //inserisco parentesi aperte nella stack
+            if (tmp == '(' || tmp == '[' || tmp == '{') {
+                stack.offerLast(tmp);
+                continue;
+            }
+
+            //se la stack è vuota vuol dire che la stringa ha chiuso una parentesi all'inizio
+            if (stack.isEmpty()) {
+                return false;
+            }
+
+            //rimuovo e verifico parentesi dalla stack
+            char test;
+            switch (tmp) {
+                case ')':
+                    test = stack.pollLast();
+                    if (test == '{' || test == '[') {
+                        return false;
+                    }
+                    break;
+                case ']':
+                    test = stack.pollLast();
+                    if (test == '(' || test == '{') {
+                        return false;
+                    }
+                    break;
+                case '}':
+                    test = stack.pollLast();
+                    if (test == '[' || test == '(') {
+                        return false;
+                    }
+                    break;
+            }
+        }
+
+        //se la stack è vuota allora la stringa è bilanciata
+        return (stack.isEmpty());
     }
 
 }

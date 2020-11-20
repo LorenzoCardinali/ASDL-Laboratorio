@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package it.unicam.cs.asdl2021.mp1;
 
@@ -12,7 +12,7 @@ package it.unicam.cs.asdl2021.mp1;
  * assumes that the handle is an <code>int</code> being the index of an array
  * representing a binary (or d-ary in general) heap implementing the operations
  * of the priority queue.
- * 
+ *
  * @author Luca Tesei
  *
  */
@@ -24,7 +24,7 @@ public interface PriorityQueueElement {
 
     /**
      * Set the priority of an element to a new value.
-     * 
+     *
      * @param newPriority
      *                        the new value of the priority
      */
@@ -37,7 +37,7 @@ public interface PriorityQueueElement {
 
     /**
      * Set the handle of an element to a new value.
-     * 
+     *
      * @param newHandle
      *                      the new value of the handle
      */

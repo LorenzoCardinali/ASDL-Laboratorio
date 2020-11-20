@@ -6,9 +6,8 @@ package it.unicam.cs.asdl2021.mp1;
  * dei job è la loro scadenza. La scadenza di un job può essere anticipata
  * dinamicamente, che corrisponde a dire che la sua priorità nella coda può
  * essere decrementata.
- * 
- * @author Luca Tesei
  *
+ * @author Luca Tesei
  */
 public class Scheduler {
 
@@ -24,9 +23,8 @@ public class Scheduler {
     /**
      * Inserisce un nuovo job nello scheduler. Il job deve avere una deadline
      * già fissata.
-     * 
-     * @param j
-     *              il nuovo job da inserire
+     *
+     * @param j il nuovo job da inserire
      */
     public void schedule(Job j) {
         // la deadline verrà presa come priority
@@ -36,7 +34,7 @@ public class Scheduler {
     /**
      * Estrae il prossimo job da eseguire, cioè quello con scadenza più
      * ravvicinata.
-     * 
+     *
      * @return il prossimo job da eseguire
      */
     public Job getNextJobToExecute() {
@@ -45,13 +43,10 @@ public class Scheduler {
 
     /**
      * Anticipa un certo job di un certo tempo specificato.
-     * 
-     * @param j
-     *                   il job da anticipare
-     * @param amount
-     *                   la quantità di tempo da anticipare
-     * @throws IllegalArgumentException
-     *                                      se amount è <= 0
+     *
+     * @param j      il job da anticipare
+     * @param amount la quantità di tempo da anticipare
+     * @throws IllegalArgumentException se amount è <= 0
      */
     public void anticipateJob(Job j, double amount) {
         if (amount <= 0)

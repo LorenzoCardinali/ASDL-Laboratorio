@@ -4,11 +4,10 @@ package it.unicam.cs.asdl2021.mp1;
  * Semplice classe i cui oggetti rappresentano dei Job da eseguire su un
  * processore entro una certa scadenza, rappresentata da un double. Un double
  * più piccolo rappresenta una scadenza più ravvicinata.
- * 
+ * <p>
  * Un Job può essere inserito in una coda con priorità.
- * 
- * @author Luca Tesei
  *
+ * @author Luca Tesei
  */
 public class Job implements PriorityQueueElement {
 
@@ -17,13 +16,13 @@ public class Job implements PriorityQueueElement {
     private double deadline;
 
     private int handle;
-    
+
     // other fields may be present, this is just a demonstration
 
     /**
      * Crea un nuovo job con la sua deadline.
-     * 
-     * @param name nome del job
+     *
+     * @param name     nome del job
      * @param deadline scadenza
      */
     public Job(String name, double deadline) {
@@ -41,8 +40,7 @@ public class Job implements PriorityQueueElement {
     }
 
     /**
-     * @param deadline
-     *                     the deadline to set
+     * @param deadline the deadline to set
      */
     public void setDeadline(double deadline) {
         this.deadline = deadline;
