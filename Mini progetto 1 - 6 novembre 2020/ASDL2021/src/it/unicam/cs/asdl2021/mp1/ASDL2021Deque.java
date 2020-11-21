@@ -482,7 +482,7 @@ public class ASDL2021Deque<E> implements Deque<E> {
 
         private Node<E> lastReturned;
 
-        private int modifiche;
+        private final int modifiche;
 
         Itr() {
             //Inizializzazione Iteratore
@@ -546,7 +546,7 @@ public class ASDL2021Deque<E> implements Deque<E> {
 
         private Node<E> lastReturned;
 
-        private int modifiche;
+        private final int modifiche;
 
         DescItr() {
             this.lastReturned = null;

@@ -1,6 +1,7 @@
 package it.unicam.cs.asdl2021.mp1;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
@@ -43,7 +44,6 @@ public class TernaryHeapMinPriorityQueue {
      */
     public int size() {
         return this.heap.size();
-
     }
 
     /**
@@ -61,10 +61,12 @@ public class TernaryHeapMinPriorityQueue {
             throw new NullPointerException("Elemento inserito nullo.");
         }
 
+        //inserisco l'indice dell'elemento
+        element.setHandle(size());
         heap.add(element);
 
         //index dell'ultimo nodo
-        int last = parentIndex(heap.size() - 1);
+        int last = parentIndex(size() - 1);
 
         //Ricostruisco min-heap con il nuovo elemento
         for (int i = last; i >= 0; i--) {
@@ -99,13 +101,13 @@ public class TernaryHeapMinPriorityQueue {
         }
 
         //salvo il minimo (testa del heap)
-        PriorityQueueElement tmp = heap.get(0);
+        PriorityQueueElement tmp = minimum();
 
         //scambio il minimo con la fine della lista (ultima foglia del heap)
-        swap(0, heap.size() - 1);
+        swap(0, size() - 1);
 
         //rimuovo l'ultima foglia del heap
-        heap.remove(heap.size() - 1);
+        heap.remove(size() - 1);
 
         //sistemo l'heap
         heapify(0);
@@ -130,14 +132,21 @@ public class TernaryHeapMinPriorityQueue {
      *                                  priority of the element
      */
     public void decreasePriority(PriorityQueueElement element, double newPriority) {
+        if (element == null) {
+            throw new NullPointerException("Elemento nullo");
+        }
+
         int indexElement;
-        if(!heap.contains(element)) {
+
+        //controlli vari
+        if (!heap.contains(element) || !present(element)) {
             throw new NoSuchElementException("Elemento non presente");
-        } else {
+        } else { //localizzo l'elemento da modificare
             indexElement = heap.indexOf(element);
         }
 
-        if(!(newPriority < heap.get(indexElement).getPriority())) {
+        //verifico la priorità
+        if (!(newPriority < heap.get(indexElement).getPriority())) {
             throw new IllegalArgumentException("Nuova priorità non abbastanza bassa");
         }
 
@@ -166,8 +175,8 @@ public class TernaryHeapMinPriorityQueue {
      * suoi sottoalberi sinistro e destro (se esistono) siano heap.
      */
     private void heapify(int i) {
-        if (heap.size() < i || i < 0) {
-            throw new IllegalArgumentException("Index non valido");
+        if (size() < i || i < 0) {
+            throw new IllegalArgumentException("Index non valido (heapify) " + i);
         }
 
         //Verifica se sono arrivato ad una foglia
@@ -177,13 +186,12 @@ public class TernaryHeapMinPriorityQueue {
         int left = leftIndex(i), center = centerIndex(i), right = rightIndex(i);
 
         //caso in cui il ramo i ha solo 1 foglia
-        if (left == heap.size() - 2) {
+        if (left == size() - 1) {
             if (heap.get(left).getPriority() < heap.get(i).getPriority()) {
                 swap(i, left);
-                return;
             }
         } else //caso in cui il ramo i ha solo 2 foglie
-            if (left == heap.size() - 1) {
+            if (left == size() - 2) {
                 if (heap.get(left).getPriority() < heap.get(i).getPriority()
                         || heap.get(center).getPriority() < heap.get(i).getPriority()) {
 
@@ -192,7 +200,6 @@ public class TernaryHeapMinPriorityQueue {
                     } else {
                         swap(i, center);
                     }
-                    return;
                 }
             } else //caso in cui l'indice i è completo (3 foglie)
                 if (heap.get(left).getPriority() < heap.get(i).getPriority()
@@ -234,16 +241,15 @@ public class TernaryHeapMinPriorityQueue {
 
     //Return true se la posizione i è una foglia
     private boolean isLeaf(int i) {
-        if (i >= (heap.size() / 3) && i <= heap.size()) {
-            return true;
-        }
-        return false;
+        if (i == 0 && size() > 1) return false;
+
+        return i >= (size() / 3) && i <= size();
     }
 
     //Restituisce la foglia sinistra del ramo i
     private int leftIndex(int i) {
-        if (i > heap.size() - 1 || i < 0 || !isLeaf(i)) {
-            throw new IllegalArgumentException("Index non valido");
+        if (i > size() || i < 0) {
+            throw new IllegalArgumentException("Index non valido (leftIndex) " + i);
         }
 
         return i * 3 + 1;
@@ -251,8 +257,8 @@ public class TernaryHeapMinPriorityQueue {
 
     //Restituisce la foglia centrale del ramo i
     private int centerIndex(int i) {
-        if (i > heap.size() - 1 || i < 0 || !isLeaf(i)) {
-            throw new IllegalArgumentException("Index non valido");
+        if (i > size() || i < 0) {
+            throw new IllegalArgumentException("Index non valido (centerIndex) " + i);
         }
 
         return i * 3 + 2;
@@ -260,8 +266,8 @@ public class TernaryHeapMinPriorityQueue {
 
     //Restituisce la foglia destra del ramo i
     private int rightIndex(int i) {
-        if (i > heap.size() - 1 || i < 0 || !isLeaf(i)) {
-            throw new IllegalArgumentException("Index non valido");
+        if (i > size() || i < 0) {
+            throw new IllegalArgumentException("Index non valido (rightIndex) " + i);
         }
 
         return i * 3 + 3;
@@ -269,8 +275,8 @@ public class TernaryHeapMinPriorityQueue {
 
     //Restituisce il ramo di i
     private int parentIndex(int i) {
-        if (heap.size() - 1 < i || i < 0) {
-            throw new IllegalArgumentException("Index non valido");
+        if (size() < i || i < 0) {
+            throw new IllegalArgumentException("Index non valido (parentIndex) " + i);
         }
 
         if (i == 0) {
@@ -278,6 +284,21 @@ public class TernaryHeapMinPriorityQueue {
         } else {
             return (i - 1) / 3;
         }
+    }
+
+    //new compare to
+    private boolean present(PriorityQueueElement element) {
+
+        int i = 0;
+
+        //cerco l'elemento nel heap
+        while (i < size()) {
+            if (this.heap.get(i++).getPriority() == element.getPriority()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // TODO implement: possibly add private methods for implementation purposes

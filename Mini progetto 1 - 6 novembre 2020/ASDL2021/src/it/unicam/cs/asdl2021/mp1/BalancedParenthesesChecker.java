@@ -16,7 +16,7 @@ package it.unicam.cs.asdl2021.mp1;
  * of balanced parentheses
  *
  * @author Template: Luca Tesei, Implementation:
- *
+ * <p>
  * Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
  */
 public class BalancedParenthesesChecker {
@@ -48,6 +48,8 @@ public class BalancedParenthesesChecker {
         //rimuovo caratteri ignorati (spazi, \n e \t)
         s = s.replaceAll("\\s+|\\t+|\\n+", "");
 
+        System.out.println(s);
+
         //loop stringa
         for (int i = 0; i < s.length(); i++) {
             char tmp = s.charAt(i);
@@ -58,8 +60,14 @@ public class BalancedParenthesesChecker {
                 continue;
             }
 
+            //controllo che non venga inserito un carattere non ammesso
+            if(tmp!=')' && tmp!=']' && tmp!='}') {
+                throw new IllegalArgumentException("Caratteri non validi");
+            }
+
             //se la stack è vuota vuol dire che la stringa ha chiuso una parentesi all'inizio
-            if (stack.isEmpty()) {
+            //se la stringa è formata da un solo carattere vuol dire che c'è solo una parentesi nella stringa
+            if (stack.isEmpty() || s.length() == 1) {
                 return false;
             }
 
