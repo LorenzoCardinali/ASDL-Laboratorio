@@ -493,17 +493,9 @@ public class ASDL2021Deque<E> implements Deque<E> {
         public boolean hasNext() {
             //stato iniziale
             if (this.lastReturned == null) {
-                if (ASDL2021Deque.this.first != null) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return ASDL2021Deque.this.first != null;
             } else { //l'iteratore si è mosso almeno una volta
-                if (this.lastReturned.next != null) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return this.lastReturned.next != null;
             }
         }
 
@@ -556,17 +548,9 @@ public class ASDL2021Deque<E> implements Deque<E> {
         public boolean hasNext() {
             //stato iniziale
             if (this.lastReturned == null) {
-                if (ASDL2021Deque.this.last != null) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return ASDL2021Deque.this.last != null;
             } else { //l'iteratore si è mosso almeno una volta
-                if (this.lastReturned.prev != null) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return this.lastReturned.prev != null;
             }
         }
 

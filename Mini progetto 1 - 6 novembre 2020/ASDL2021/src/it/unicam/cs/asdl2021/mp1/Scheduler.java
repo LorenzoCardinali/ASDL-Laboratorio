@@ -11,7 +11,7 @@ package it.unicam.cs.asdl2021.mp1;
  */
 public class Scheduler {
 
-    private TernaryHeapMinPriorityQueue queue;
+    private final TernaryHeapMinPriorityQueue queue;
 
     /**
      * Costruisce un nuovo scheduler

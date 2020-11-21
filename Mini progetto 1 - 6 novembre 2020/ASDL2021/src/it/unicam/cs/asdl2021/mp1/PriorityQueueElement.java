@@ -20,24 +20,24 @@ public interface PriorityQueueElement {
     /**
      * @return the current priority associated with the element
      */
-    public double getPriority();
+    double getPriority();
 
     /**
      * Set the priority of an element to a new value.
      *
      * @param newPriority the new value of the priority
      */
-    public void setPriority(double newPriority);
+    void setPriority(double newPriority);
 
     /**
      * @return the current handle of the element
      */
-    public int getHandle();
+    int getHandle();
 
     /**
      * Set the handle of an element to a new value.
      *
      * @param newHandle the new value of the handle
      */
-    public void setHandle(int newHandle);
+    void setHandle(int newHandle);
 }

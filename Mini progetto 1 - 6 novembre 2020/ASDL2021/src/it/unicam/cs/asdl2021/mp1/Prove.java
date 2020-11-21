@@ -11,7 +11,7 @@ public class Prove {
 
         System.out.println(s);
         //rimuovo caratteri ignorati (spazi, \n e \t)
-        s = s.replaceAll("\\s+|\\t+|\\n+","");
+        s = s.replaceAll("\\s+|\\t+|\\n+", "");
         System.out.println(s);
         //loop stringa
         for (int i = 0; i < s.length(); i++) {
@@ -24,26 +24,26 @@ public class Prove {
             }
 
             //se la stack è vuota vuol dire che la stringa ha chiuso una parentesi all'inizio
-            if (stack.isEmpty())  {
+            if (stack.isEmpty()) {
                 return false;
             }
 
             //rimuovo e verifico parentesi dalla stack
             char test;
             switch (tmp) {
-                case ')' :
+                case ')':
                     test = stack.pollLast();
                     if (test == '{' || test == '[') {
                         return false;
                     }
                     break;
-                case ']' :
+                case ']':
                     test = stack.pollLast();
                     if (test == '(' || test == '{') {
                         return false;
                     }
                     break;
-                case '}' :
+                case '}':
                     test = stack.pollLast();
                     if (test == '[' || test == '(') {
                         return false;

@@ -11,7 +11,7 @@ package it.unicam.cs.asdl2021.mp1;
  */
 public class Job implements PriorityQueueElement {
 
-    private String name;
+    private final String name;
 
     private double deadline;
 

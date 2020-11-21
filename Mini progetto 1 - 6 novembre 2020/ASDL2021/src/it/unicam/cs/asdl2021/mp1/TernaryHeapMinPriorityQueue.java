@@ -26,7 +26,7 @@ public class TernaryHeapMinPriorityQueue {
      * position 0 (the JUnit tests will assume so). You have to adapt
      * child/parent indexing formulas consequently.
      */
-    private ArrayList<PriorityQueueElement> heap;
+    private final ArrayList<PriorityQueueElement> heap;
 
     // TODO implement: possibly insert other private fields that may be needed for implementation
 
