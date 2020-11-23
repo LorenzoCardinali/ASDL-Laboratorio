@@ -28,8 +28,6 @@ public class TernaryHeapMinPriorityQueue {
      */
     private final ArrayList<PriorityQueueElement> heap;
 
-    // TODO implement: possibly insert other private fields that may be needed for implementation
-
     /**
      * Create an empty queue.
      */
@@ -108,7 +106,7 @@ public class TernaryHeapMinPriorityQueue {
         PriorityQueueElement tmp = minimum();
 
         //scambio il minimo con la fine della lista (ultima foglia del heap)
-        swap(0, size() - 1);
+        swap(0, heap.size() - 1);
 
         //rimuovo l'ultima foglia del heap
         heap.remove(heap.size() - 1);
@@ -148,7 +146,7 @@ public class TernaryHeapMinPriorityQueue {
         int indexElement = 0;
 
         //cerco l'elemento nel heap e se c'è acquisisco l'indice
-        while (indexElement < heap.size() && trovato != true) {
+        while (indexElement < heap.size()) {
             if (this.heap.get(indexElement).getPriority() == element.getPriority()) {
                 trovato = true;
                 break;
@@ -298,8 +296,6 @@ public class TernaryHeapMinPriorityQueue {
             return (i - 1) / 3;
         }
     }
-
-    // TODO implement: possibly add private methods for implementation purposes
 
     /*
      * This method is only for JUnit testing purposes.
