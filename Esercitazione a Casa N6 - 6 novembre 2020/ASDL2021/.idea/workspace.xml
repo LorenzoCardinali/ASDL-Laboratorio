@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0537391a-e907-4616-a57d-2ad72055e41c" name="Default Changelist" comment="forse abbiamo finito">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Esercitazione a Casa N7 - 13 novembre 2020/ASDL2021/src/it/unicam/cs/asdl2021/es7/MaxHeap.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Esercitazione a Casa N7 - 13 novembre 2020/ASDL2021/src/it/unicam/cs/asdl2021/es7/MaxHeap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Mini progetto 1 - 6 novembre 2020/ASDL2021/ASDL2021.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Mini progetto 1 - 6 novembre 2020/ASDL2021/ASDL2021.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Mini progetto 1 - 6 novembre 2020/ASDL2021/src/it/unicam/cs/asdl2021/mp1/ASDL2021Deque.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Mini progetto 1 - 6 novembre 2020/ASDL2021/src/it/unicam/cs/asdl2021/mp1/ASDL2021Deque.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Mini progetto 1 - 6 novembre 2020/ASDL2021/src/it/unicam/cs/asdl2021/mp1/BalancedParenthesesChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Mini progetto 1 - 6 novembre 2020/ASDL2021/src/it/unicam/cs/asdl2021/mp1/BalancedParenthesesChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Mini progetto 1 - 6 novembre 2020/ASDL2021/src/it/unicam/cs/asdl2021/mp1/TernaryHeapMinPriorityQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Mini progetto 1 - 6 novembre 2020/ASDL2021/src/it/unicam/cs/asdl2021/mp1/TernaryHeapMinPriorityQueue.java" afterDir="false" />
-    </list>
+    <list default="true" id="0537391a-e907-4616-a57d-2ad72055e41c" name="Default Changelist" comment="forse abbiamo finito" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

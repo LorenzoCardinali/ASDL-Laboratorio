@@ -73,20 +73,4 @@ public class Job implements PriorityQueueElement {
     public void setHandle(int newHandle) {
         this.handle = newHandle;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Job job = (Job) o;
-
-        return Double.compare(job.deadline, deadline) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        long temp = Double.doubleToLongBits(deadline);
-        return (int) (temp ^ (temp >>> 32));
-    }
 }

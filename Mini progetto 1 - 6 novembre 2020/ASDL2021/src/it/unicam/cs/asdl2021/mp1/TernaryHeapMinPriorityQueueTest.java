@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TernaryHeapMinPriorityQueueTest {
 
-    private final static int MAX_PROBLEM_SIZE = 9999;
+    private final static int MAX_PROBLEM_SIZE = 1000;
     private final static double DOUBLE_DECREASE = 0.0000000000000001d;
 
     TernaryHeapMinPriorityQueue ternMinPrHeap = new TernaryHeapMinPriorityQueue();
@@ -36,19 +36,17 @@ class TernaryHeapMinPriorityQueueTest {
     @Test
     void insert() {
         assertThrows(NullPointerException.class, () -> new TernaryHeapMinPriorityQueue().insert(null));
-        ArrayList<Job> toCompareList = new ArrayList<>();
         ternMinPrHeap.clear();
         Job element;
-        for (int i = 1; i <= MAX_PROBLEM_SIZE; i++) {
-            element = new Job("Job " + i, (1d / i));
-            toCompareList.add(element);
-            ternMinPrHeap.insert(element);
-        }
+        for (int i = 1; i <= MAX_PROBLEM_SIZE; i++)
+            ternMinPrHeap.insert(new Job("Job " + i, (1d / i)));
 
-        Collections.sort(toCompareList, new priorityQueueElementComparator());
+        ArrayList<PriorityQueueElement> jobslist = ternMinPrHeap.getTernaryHeap();
 
-        for (int i = 0; i < MAX_PROBLEM_SIZE; i++)
-            assertEquals(toCompareList.get(i), ternMinPrHeap.extractMinimum());
+        for (int i = 0; i < jobslist.size(); i++)
+            assertEquals(i, jobslist.get(i).getHandle());
+
+        assertTrue(checkMinHeapProperty(jobslist));
     }
 
     @Test
@@ -61,12 +59,14 @@ class TernaryHeapMinPriorityQueueTest {
             toCompareList.add(new Job("Job " + i, (1d / i)));
 
         Collections.shuffle(toCompareList);
-        Job minimum = Collections.min(toCompareList, new priorityQueueElementComparator());
+        Job minimum = Collections.min(toCompareList, new PriorityQueueElementComparator());
 
         for (Job job : toCompareList)
             ternMinPrHeap.insert(job);
 
-        assertEquals(minimum, ternMinPrHeap.minimum());
+        assertEquals(0, new PriorityQueueElementComparator().compare(minimum, ternMinPrHeap.minimum()));
+        assertEquals(minimum.getHandle(), ternMinPrHeap.minimum().getHandle());
+
     }
 
     @Test
@@ -84,11 +84,11 @@ class TernaryHeapMinPriorityQueueTest {
             ternMinPrHeap.insert(job);
 
         Job minimum;
-        priorityQueueElementComparator comparator =
-                new priorityQueueElementComparator();
+        PriorityQueueElementComparator comparator =
+                new PriorityQueueElementComparator();
 
         while (ternMinPrHeap.size() > 0) {
-            minimum = Collections.min(toCompareList, new priorityQueueElementComparator());
+            minimum = Collections.min(toCompareList, new PriorityQueueElementComparator());
             toCompareList.remove(minimum);
             assertEquals(0, comparator.compare(minimum, ternMinPrHeap.extractMinimum()));
         }
@@ -102,33 +102,42 @@ class TernaryHeapMinPriorityQueueTest {
         ternMinPrHeap.clear();
         ArrayList<PriorityQueueElement> jobsList = new ArrayList();
         for (int i = 1; i <= MAX_PROBLEM_SIZE; i++) {
-            Job support = new Job("Job " + i, (1d / i));
-            ternMinPrHeap.insert(support);
+            ternMinPrHeap.insert(new Job("Job " + i, (1d / i)));
         }
-        //creating a copy of the heap
-        ternMinPrHeap.getTernaryHeap().stream().forEach((queueElement) -> jobsList.add(new Job(((Job) queueElement).getName(), queueElement.getPriority())));
+
+        //creating clones of the heap with all the elements having handle set to 0 (to test with extractMinimum)
+        ternMinPrHeap.getTernaryHeap().stream().forEach((queueElement) -> {
+            Job support = new Job(((Job) queueElement).getName(), (queueElement.getPriority()));//CLONES NOT COPIES!
+            support.setHandle(0);
+            jobsList.add(support);
+        });
+        //Sorting the clones' list
+        Collections.sort(jobsList, new PriorityQueueElementComparator());
 
         //checking exceptions
-        {
-            final TernaryHeapMinPriorityQueue testingExceptions = ternMinPrHeap;
-            assertThrows(IllegalArgumentException.class, () -> testingExceptions.decreasePriority(jobsList.get(0), 2d));
-            assertThrows(NoSuchElementException.class, () -> testingExceptions.decreasePriority(new Job("https://youtu.be/T6NcUlxtIuw", 0.8950850969d), 0.2d));
-        }
+        final TernaryHeapMinPriorityQueue testingExceptions = ternMinPrHeap;
+        assertThrows(IllegalArgumentException.class, () -> testingExceptions.decreasePriority(jobsList.get(0), 2d));
+        assertThrows(NoSuchElementException.class, () -> testingExceptions.decreasePriority(new Job("https://youtu.be/T6NcUlxtIuw", 0.8950850969d), 0.2d));
 
-        //decreasing priority. No exception expected
-        for (int i = 0; i < MAX_PROBLEM_SIZE; i++) {
-            final Job element = (Job) jobsList.get(i);
-            double newPriority = (jobsList.get(i).getPriority() - DOUBLE_DECREASE);
-            ternMinPrHeap.decreasePriority(element, newPriority);
-        }
+        for (PriorityQueueElement element : jobsList) {
+            ArrayList<PriorityQueueElement> heap = ternMinPrHeap.getTernaryHeap();
+            for (int i = 0; i < heap.size(); i++)
+                ternMinPrHeap.decreasePriority(heap.get(i), heap.get(i).getPriority() - DOUBLE_DECREASE);
 
-        priorityQueueElementComparator comparator = new priorityQueueElementComparator();
-        while (!jobsList.isEmpty()) {
-            Job minimumFromList = (Job) Collections.min(jobsList, comparator);
-            jobsList.remove(minimumFromList);
-            Job minimumFromHeap = (Job) ternMinPrHeap.extractMinimum();
-            assertEquals(minimumFromList.getName(), minimumFromHeap.getName());
-            assertTrue(comparator.compare(minimumFromList, minimumFromHeap) > 0);
+            assertTrue(checkMinHeapProperty(heap));
+
+            /*
+            The Job class does not redefine equals() so two distinct objects
+            sharing the same attributes, should always be considered different.
+
+            If this doesn't happen, the test will fail.
+             */
+            PriorityQueueElement support = ternMinPrHeap.extractMinimum();
+
+            assertNotEquals(element, support);
+
+            assertEquals(element.getHandle(), support.getHandle());
+            assertTrue(Double.compare(element.getPriority(), support.getPriority()) > 0);
         }
     }
 
@@ -141,13 +150,27 @@ class TernaryHeapMinPriorityQueueTest {
         ternMinPrHeap.clear();
         assertEquals(0, ternMinPrHeap.size());
         assertThrows(NoSuchElementException.class, () -> new TernaryHeapMinPriorityQueue().minimum());
-        assertThrows(NoSuchElementException.class, () -> new TernaryHeapMinPriorityQueue().minimum());
+        assertThrows(NoSuchElementException.class, () -> new TernaryHeapMinPriorityQueue().extractMinimum());
     }
 
-    private static class priorityQueueElementComparator implements Comparator<PriorityQueueElement> {
+    private static class PriorityQueueElementComparator implements Comparator<PriorityQueueElement> {
         @Override
         public int compare(PriorityQueueElement o1, PriorityQueueElement o2) {
             return Double.compare(o1.getPriority(), o2.getPriority());
         }
     }
+
+    private boolean checkMinHeapProperty(ArrayList<PriorityQueueElement> list) {
+        PriorityQueueElementComparator comparator = new PriorityQueueElementComparator();
+        for (int i = list.size() - 1; i > 0; i--)
+            if (comparator.compare(list.get(i), list.get(getParentIndex(i))) >= 0)
+                continue;
+            else return false;
+        return true;
+    }
+
+    private int getParentIndex(int index) {
+        return (index - 1) / 3;
+    }
+
 }

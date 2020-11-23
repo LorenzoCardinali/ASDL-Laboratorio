@@ -66,11 +66,15 @@ public class TernaryHeapMinPriorityQueue {
         heap.add(element);
 
         //index dell'ultimo nodo
-        int last = parentIndex(size() - 1);
+        int last = heap.size() - 1;
 
-        //Ricostruisco min-heap con il nuovo elemento
-        for (int i = last; i >= 0; i--) {
-            heapify(i);
+        //Sistemo min-heap con il nuovo elemento
+        while (last > 0) {
+            int lastParent = parentIndex(last);
+            if (element.getPriority() < heap.get(lastParent).getPriority()) {
+                swap(last, lastParent);
+                last = lastParent;
+            } else break;
         }
     }
 
@@ -107,10 +111,13 @@ public class TernaryHeapMinPriorityQueue {
         swap(0, size() - 1);
 
         //rimuovo l'ultima foglia del heap
-        heap.remove(size() - 1);
+        heap.remove(heap.size() - 1);
 
         //sistemo l'heap
         heapify(0);
+
+        //setto l'handle dell'elemento minimo a 0
+        tmp.setHandle(0);
 
         //ritorno il minimo
         return tmp;
@@ -132,17 +139,24 @@ public class TernaryHeapMinPriorityQueue {
      *                                  priority of the element
      */
     public void decreasePriority(PriorityQueueElement element, double newPriority) {
+
         if (element == null) {
             throw new NullPointerException("Elemento nullo");
         }
 
-        int indexElement;
+        boolean trovato = false;
+        int indexElement = 0;
 
-        //controlli vari
-        if (!heap.contains(element) || !present(element)) {
+        //cerco l'elemento nel heap e se c'è acquisisco l'indice
+        while (indexElement < heap.size() && trovato != true) {
+            if (this.heap.get(indexElement).getPriority() == element.getPriority()) {
+                trovato = true;
+                break;
+            }
+            indexElement++;
+        }
+        if (!trovato) {
             throw new NoSuchElementException("Elemento non presente");
-        } else { //localizzo l'elemento da modificare
-            indexElement = heap.indexOf(element);
         }
 
         //verifico la priorità
@@ -238,12 +252,11 @@ public class TernaryHeapMinPriorityQueue {
         this.heap.set(spos, tmp1);
     }
 
-
     //Return true se la posizione i è una foglia
     private boolean isLeaf(int i) {
-        if (i == 0 && size() > 1) return false;
 
-        return i >= (size() / 3) && i <= size();
+        //i è una foglia solo se il suo figlio sinistro non esiste (quindi maggiore o uguale al size)
+        return leftIndex(i) >= this.size();
     }
 
     //Restituisce la foglia sinistra del ramo i
@@ -284,21 +297,6 @@ public class TernaryHeapMinPriorityQueue {
         } else {
             return (i - 1) / 3;
         }
-    }
-
-    //new compare to
-    private boolean present(PriorityQueueElement element) {
-
-        int i = 0;
-
-        //cerco l'elemento nel heap
-        while (i < size()) {
-            if (this.heap.get(i++).getPriority() == element.getPriority()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     // TODO implement: possibly add private methods for implementation purposes
