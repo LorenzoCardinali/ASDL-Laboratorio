@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package it.unicam.cs.asdl2021.es8;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Classe che implementa un algoritmo di ordinamento basato su heap.
- * 
+ *
  * @author Luca Tesei
  *
  */
@@ -39,7 +39,7 @@ public class HeapSort<E extends Comparable<E>> implements SortingAlgorithm<E> {
         // / 2) - 1 dove / è la divisione intera
         for (int i = (l.size() / 2) - 1; i >= 0; i--) {
             heapify(l, i); // heapify fa riferimento alla lunghezza heapSize,
-                           // non alla lunghezza effettiva di l
+            // non alla lunghezza effettiva di l
         }
         // Ora l è uno heap
         for (int i = l.size() - 1; i > 0; i--) {

@@ -34,8 +34,7 @@ public class MergeSort<E extends Comparable<E>> implements SortingAlgorithm<E> {
         SortingAlgorithmResult<E> left = this.recSort(l, start, middle);
         SortingAlgorithmResult<E> right = this.recSort(l, middle + 1, stop);
         SortingAlgorithmResult<E> merge = this.merge(l, start, middle, stop);
-        return new SortingAlgorithmResult<>(l, left.getCountCompare()
-                + right.getCountCompare() + merge.getCountCompare());
+        return new SortingAlgorithmResult<>(l, left.getCountCompare() + right.getCountCompare() + merge.getCountCompare());
 
     }
 

@@ -1,4 +1,4 @@
-package it.unicam.cs.asdl1920.sort;
+package it.unicam.cs.asdl2021.es8;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +14,7 @@ class SortingAlgorithmTest {
 
     /**
      * Test method for
-     * {@link it.unicam.cs.asdl1920.sort.SortingAlgorithm#sort(java.util.List)}.
+     * {@link it.unicam.cs.asdl2021.es8.SortingAlgorithm#sort(java.util.List)}.
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Test
@@ -41,30 +41,37 @@ class SortingAlgorithmTest {
         ordered.add(55);
         ordered.add(87);
         ordered.add(90);
+
         SortingAlgorithm<Integer> bubbleSort = new BubbleSort();
         SortingAlgorithmResult<Integer> result = bubbleSort.sort((ArrayList<Integer>) l.clone());
         assertEquals(ordered, result.getL());
         assertTrue(result.checkOrder());
+
         SortingAlgorithm<Integer> heapSort = new HeapSort();
         result = heapSort.sort((ArrayList<Integer>) l.clone());
         assertEquals(ordered, result.getL());
         assertTrue(result.checkOrder());
+
         SortingAlgorithm<Integer> insertionSort = new InsertionSort();
         result = insertionSort.sort((ArrayList<Integer>) l.clone());
         assertEquals(ordered, result.getL());
         assertTrue(result.checkOrder());
-        SortingAlgorithm<Integer> mergeSort = new MergeSort();
-        result = mergeSort.sort((ArrayList<Integer>) l.clone());
-        assertEquals(ordered, result.getL());
-        assertTrue(result.checkOrder());
+
         SortingAlgorithm<Integer> quickSort = new QuickSort();
         result = quickSort.sort((ArrayList<Integer>) l.clone());
         assertEquals(ordered, result.getL());
         assertTrue(result.checkOrder());
+
         SortingAlgorithm<Integer> quickSortRandom = new QuickSortRandom();
         result = quickSortRandom.sort((ArrayList<Integer>) l.clone());
         assertEquals(ordered, result.getL());
         assertTrue(result.checkOrder());
+
+        SortingAlgorithm<Integer> mergeSort = new MergeSort();
+        result = mergeSort.sort((ArrayList<Integer>) l.clone());
+        assertEquals(ordered, result.getL());
+        assertTrue(result.checkOrder());
+
     }
 
 }

@@ -1,24 +1,24 @@
 /**
- * 
+ *
  */
 package it.unicam.cs.asdl2021.es8;
 
 /**
- * 
+ *
  * Eccezione che segnala che un algoritmo di ordinamento ha commesso un errore.
- * 
+ *
  * @author Luca Tesei
  *
  */
 public class SortingException extends RuntimeException {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 7289728998235L;
 
     /**
-     * 
+     *
      */
     public SortingException() {
         super();
@@ -31,8 +31,7 @@ public class SortingException extends RuntimeException {
      * @param enableSuppression
      * @param writableStackTrace
      */
-    public SortingException(String message, Throwable cause,
-            boolean enableSuppression, boolean writableStackTrace) {
+    public SortingException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
         // TODO Auto-generated constructor stub
     }

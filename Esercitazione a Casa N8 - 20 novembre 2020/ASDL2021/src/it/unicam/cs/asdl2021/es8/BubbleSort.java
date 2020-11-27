@@ -1,18 +1,13 @@
-/**
- * 
- */
 package it.unicam.cs.asdl2021.es8;
 
 import java.util.List;
 
 /**
  * Implementazione dell'algoritmo Bubble Sort.
- * 
- * @author Luca Tesei
  *
+ * @author Luca Tesei
  */
-public class BubbleSort<E extends Comparable<E>>
-        implements SortingAlgorithm<E> {
+public class BubbleSort<E extends Comparable<E>> implements SortingAlgorithm<E> {
 
     public SortingAlgorithmResult<E> sort(List<E> l) {
         int countCompare = 0;
