@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ASDL2021/ASDL2021.iml" filepath="$PROJECT_DIR$/ASDL2021/ASDL2021.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Backup/Backup.iml" filepath="$PROJECT_DIR$/Backup/Backup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Esercitazione a Casa N4 - 20 ottobre 2020.iml" filepath="$PROJECT_DIR$/.idea/Esercitazione a Casa N4 - 20 ottobre 2020.iml" />
+    </modules>
+  </component>
+</project>

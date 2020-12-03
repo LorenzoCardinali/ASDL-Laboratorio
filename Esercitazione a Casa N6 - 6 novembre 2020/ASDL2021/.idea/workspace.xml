@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0537391a-e907-4616-a57d-2ad72055e41c" name="Default Changelist" comment="forse abbiamo finito" />
+    <list default="true" id="0537391a-e907-4616-a57d-2ad72055e41c" name="Default Changelist" comment="forse abbiamo finito">
+      <change afterPath="$PROJECT_DIR$/src/it/unicam/cs/asdl2021/es6sol/ASDL2021SingleLinkedList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Esercitazione a Casa N9 - 27 novembre 2020/ASDL2021/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Esercitazione a Casa N9 - 27 novembre 2020/ASDL2021/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Esercitazione a Casa N9 - 27 novembre 2020/ASDL2021/src/it/unicam/cs/asdl2021/es9/CollisionListResizableHashTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Esercitazione a Casa N9 - 27 novembre 2020/ASDL2021/src/it/unicam/cs/asdl2021/es9/CollisionListResizableHashTable.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
