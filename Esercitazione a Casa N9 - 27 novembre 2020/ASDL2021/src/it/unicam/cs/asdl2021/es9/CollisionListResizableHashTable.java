@@ -146,7 +146,7 @@ public class CollisionListResizableHashTable<E> implements Set<E> {
             return false;
         } else {
             for (Node<E> n = tmp; n != null; n = n.next) {
-                if (n.item.equals(o)) {
+                if (n.equals(o)) {
                     return true;
                 }
             }
@@ -206,10 +206,9 @@ public class CollisionListResizableHashTable<E> implements Set<E> {
             }
 
             tmp.next = new Node<E>(e, null);
+            size++;
+            modCount++;
         }
-
-        size++;
-        modCount++;
 
         if (this.size() > getCurrentThreshold()) {
             resize();
@@ -260,7 +259,7 @@ public class CollisionListResizableHashTable<E> implements Set<E> {
         if (o == null) {
             throw new NullPointerException("Oggetto nullo.");
         }
-        if (!contains(o)) return true;
+        if (!contains(o)) return false;
 
         int index = this.phf.hash(o.hashCode(), this.getCurrentCapacity());
 
@@ -287,7 +286,7 @@ public class CollisionListResizableHashTable<E> implements Set<E> {
                 return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -308,8 +307,7 @@ public class CollisionListResizableHashTable<E> implements Set<E> {
         // utilizzare un iteratore della collection e chiamare il metodo add
 
         for (Iterator<? extends E> tmp = c.iterator(); tmp.hasNext(); ) {
-            E item = (E) tmp.next();
-            this.add(item);
+            add(tmp.next());
         }
         return true;
     }
@@ -335,17 +333,6 @@ public class CollisionListResizableHashTable<E> implements Set<E> {
         this.table = new Object[INITIAL_CAPACITY];
         this.size = 0;
         this.modCount = 0;
-    }
-
-    public void printHash(){
-        System.out.println("mod" + modCount);
-        for(int index = 0; index < table.length; index++) {
-            System.out.println("index " + index + ": ");
-            for (Node<E> n = (Node<E>) this.table[index]; n != null; n = n.next) {
-                System.out.print(n.item + " ");
-            }
-            System.out.println(" ");
-        }
     }
 
     /*
@@ -414,14 +401,14 @@ public class CollisionListResizableHashTable<E> implements Set<E> {
         @Override
         public E next() {
             if (this.numeroModificheAtteso != CollisionListResizableHashTable.this.modCount) {
-                throw new ConcurrentModificationException("Errore, c'è stata una modifica inaspettata.");
+                throw new IllegalArgumentException("Errore, c'è stata una modifica inaspettata.");
             }
 
             if (!this.hasNext()) {
                 throw new NoSuchElementException("Non esiste un altro elemento");
             }
 
-            if (this.lastNode == null) {
+            if (this.lastNode.next == null) {
                     Node<E> n = (Node<E>) CollisionListResizableHashTable.this.table[lastIndex + 1];
             }
 
