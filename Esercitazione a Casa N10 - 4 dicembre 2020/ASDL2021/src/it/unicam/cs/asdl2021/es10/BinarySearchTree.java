@@ -409,31 +409,41 @@ public class BinarySearchTree<E extends Comparable<E>> {
             this.parent = parent;
         }
 
-        /*
+        /**
          * Restituisce l'altezza di questo nodo.
          *
          * @return la lunghezza del massimo cammino da questo nodo a una foglia.
          */
         protected int computeHeight() {
-            // TODO implementare ricorsivamente
-            return -1;
+            // TODO controllare
+
+            if (this.left == null && this.right == null)
+                // Sono una radice foglia
+                return 0;
+            else if (this.left == null)
+                // Ho solo il figlio destro
+                return 1 + this.right.computeHeight();
+            else if (this.right == null)
+                // Ho solo il figlio sinistro
+                return 1 + this.left.computeHeight();
+            else
+                // Ho tutti e due i figli
+                return 1 + Math.max(this.left.computeHeight(), this.right.computeHeight());
         }
 
-        /*
-         * Aggiunge un nodo a questo (sotto-)albero con una etichetta
-         * specificata.
+        /**
+         * Aggiunge un nodo a questo (sotto-)albero con una etichetta specificata.
          *
          * @param label etichetta da inserire
          *
-         * @return true se il nodo è stato effettivamente inserito, false se
-         * l'etichetta era già presente.
+         * @return true se il nodo è stato effettivamente inserito, false se l'etichetta era già presente.
          */
         protected boolean insert(E label) {
             // TODO implementare ricorsivamente
             return false;
         }
 
-        /*
+        /**
          * Cerca un nodo con una certa etichetta in questo albero.
          *
          * @param label l'etichetta da cercare
@@ -443,10 +453,34 @@ public class BinarySearchTree<E extends Comparable<E>> {
          */
         protected RecBST search(E label) {
             // TODO implementare ricorsivamente
-            return null;
+
+
+
+
+            // caso base
+            if (this.left == null && this.right == null)
+                // sono radice foglia
+                if (this.label.equals(label))
+                    return this;
+                else
+                    return null;
+            // caso ricorsivo
+            int cmp = this.label.compareTo(label);
+            if (cmp == 0)
+                return this;
+            else if (cmp > 0) {
+                if (this.left == null)
+                    return null;
+                else
+                    return this.left.search(label);
+            } else // cmp < 0
+                if (this.right == null)
+                    return null;
+                else
+                    return this.right.search(label);
         }
 
-        /*
+        /**
          * Aggiunge ad una lista data le etichette dei nodi di questo
          * (sotto-)albero nell'ordine naturale. Per far questo esegue una visita
          * in-order di questo (sotto-)albero.
@@ -458,7 +492,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
             // TODO implementare ricorsivamente
         }
 
-        /*
+        /**
          * Restituisce la lista ordinata delle etichette dei nodi di questo
          * (sotto-)albero secondo l'ordinamento naturale della classe {@code E}.
          * Per ottenere il risultato fa una visita in-order.
@@ -471,7 +505,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
             return null;
         }
 
-        /*
+        /**
          * Restituisce il puntatore al nodo che contiene l'etichetta più piccola
          * presente in questo (sotto-)albero.
          *
@@ -480,10 +514,15 @@ public class BinarySearchTree<E extends Comparable<E>> {
          */
         protected RecBST getMinNode() {
             // TODO implementare ricorsivamente
-            return null;
+            if (this.left == null)
+                // Sono il nodo più a sinistra che non ha il figlio sinistro
+                return this;
+            else
+                // Mi richiamo sul sottoalbero sinistro
+                return this.left.getMinNode();
         }
 
-        /*
+        /**
          * Restituisce il puntatore al nodo che contiene l'etichetta più grande
          * presente in questo (sotto-)albero.
          *
@@ -492,10 +531,15 @@ public class BinarySearchTree<E extends Comparable<E>> {
          */
         protected RecBST getMaxNode() {
             // TODO implementare ricorsivamente
-            return null;
+            if (this.right == null)
+                // Sono il nodo più a destra che non ha il figlio destro
+                return this;
+            else
+                // Mi richiamo sul sottoalbero destro
+                return this.right.getMaxNode();
         }
 
-        /*
+        /**
          * Restituisce il puntatore al nodo che contiene l'etichetta successiva
          * all'etichetta di questo nodo secondo l'ordine canonico della classe
          * E.
@@ -505,13 +549,36 @@ public class BinarySearchTree<E extends Comparable<E>> {
          */
         protected RecBST getSuccessorNode() {
             // TODO implementare
+
+            // Caso 1
+            if (this.right != null)
+                return this.right.getMinNode();
+            // Caso 2
+            Set<E> ancestors = new HashSet<E>();
+            // partiamo dal parent di questo nodo
+            RecBST p = this.parent;
+            ancestors.add(p.label);
+            while (p.parent != null) {
+                ancestors.add(p.parent.label);
+                if (p.parent.left != null) {
+                    // il nodo che sto controllando ha un figlio sinisto
+                    if (ancestors.contains(p.parent.left.label)) {
+                        // p.parent ha un figlio sinistro che è anche un
+                        // antenato
+                        return p.parent;
+                    }
+                }
+                // continuo a salire tra gli antenati
+                p = p.parent;
+            }
+            // non ho trovato il successore
             return null;
         }
 
-        /*
+
+        /**
          * Restituisce il puntatore al nodo che contiene l'etichetta precedente
-         * all'etichetta di questo nodo secondo l'ordine canonico della classe
-         * E.
+         * all'etichetta di questo nodo secondo l'ordine canonico della classe E.
          *
          * @return il puntatore al nodo predecessore oppure null se questo nodo
          * non ha predecessore
@@ -521,7 +588,9 @@ public class BinarySearchTree<E extends Comparable<E>> {
             return null;
         }
 
-        /*
+
+
+        /**
          * Cancella l'etichetta di questo nodo dall'albero. Potrebbe non
          * eliminare proprio questo nodo, ma un'altro nodo, copiando l'etichetta
          * di quel nodo cancellato (scollegandolo dal parent) in questo nodo.

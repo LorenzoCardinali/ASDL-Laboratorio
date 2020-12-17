@@ -67,10 +67,10 @@ public interface ADTConsList<E> {
      * @return una stringa con tutti gli elementi di questa lista
      */
     default String print() {
-        // caso base
+        //caso base
         if (this.isEmpty())
             return "";
-        // caso ricorsivo
+        //caso ricorsivo
         return this.first().toString() + " " + this.rest().print();
     }
 
@@ -81,10 +81,10 @@ public interface ADTConsList<E> {
      * @return true se questa lista contiene {@code element}
      */
     default boolean find(E e) {
-        // caso base
+        //caso base
         if (this.isEmpty())
             return false;
-        // caso ricorsivo
+        //caso ricorsivo
         if (this.first().equals(e))
             return true;
         else
@@ -99,10 +99,10 @@ public interface ADTConsList<E> {
      * {@code element}, se presente, è stata cancellata.
      */
     default ADTConsList<E> removeFirst(E element) {
-        // caso base
+        //caso base
         if (this.isEmpty())
             return this;
-        // caso ricorsivo
+        //caso ricorsivo
         if (this.first().equals(element))
             return this.rest();
         else
@@ -117,8 +117,14 @@ public interface ADTConsList<E> {
      * {@code element} sono state cancellate.
      */
     default ADTConsList<E> removeAll(E element) {
-        // TODO implementare ricorsivamente
-        return null;
+        //caso base
+        if (this.isEmpty())
+            return this;
+        //caso ricorsivo
+        if (this.first().equals(element))
+            return this.rest().removeAll(element);
+        else
+            return this.rest().removeAll(element).cons(this.first());
     }
 
     /**
@@ -131,8 +137,14 @@ public interface ADTConsList<E> {
      * dell'elemento {@code element} è stata sostituita con {@code newElement}
      */
     default ADTConsList<E> updateFirst(E element, E newElement) {
-        // TODO implementare ricorsivamente
-        return null;
+        //caso base
+        if (this.isEmpty())
+            return this;
+        //caso ricorsivo
+        if (this.first().equals(element))
+            return this.rest().cons(newElement);
+        else
+            return this.rest().updateFirst(element, newElement).cons(this.first());
     }
 
     /**
@@ -145,8 +157,14 @@ public interface ADTConsList<E> {
      * dell'elemento {@code element} sono state sostituite con {@code newElement}
      */
     default ADTConsList<E> updateAll(E element, E newElement) {
-        // TODO implementare ricorsivamente
-        return null;
+        //caso base
+        if (this.isEmpty())
+            return this;
+        //caso ricorsivo
+        if (this.first().equals(element))
+            return this.rest().cons(newElement).updateAll(element, newElement);
+        else
+            return this.rest().updateAll(element, newElement).cons(this.first());
     }
 
     /**
@@ -156,8 +174,18 @@ public interface ADTConsList<E> {
      * @return una lista che contiene gli elementi di questa lista seguita dagli elementi di {@code list}.
      */
     default ADTConsList<E> append(ADTConsList<E> list) {
-        // TODO implementare ricorsivamente
-        return null;
+        //caso base
+        if (this.isEmpty())
+            return list;
+        //caso ricorsivo
+        return this.rest().append(list).cons(this.first());
+
+        /** inverso
+         * if (list.isEmpty())
+         * return this;
+         * else
+         * return this.append(list.rest()).cons(list.first());
+         */
     }
 
     /**
@@ -167,8 +195,10 @@ public interface ADTConsList<E> {
      */
     @SuppressWarnings("unchecked")
     default ADTConsList<E> reverse() {
-        // TODO implementare ricorsivamente
-        return null;
+        //caso base
+        if (this.isEmpty())
+            return this;
+        //caso ricorsivo
+        return this.rest().reverse().append(EMPTY_LIST.cons(this.first()));
     }
-
 }

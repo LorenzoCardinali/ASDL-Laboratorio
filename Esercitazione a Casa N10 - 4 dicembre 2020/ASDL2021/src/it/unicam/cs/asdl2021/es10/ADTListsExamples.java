@@ -28,14 +28,18 @@ public class ADTListsExamples {
         if (l10.find(4))
             System.out.println("4 è contenuto");
         else System.out.println("4 non è contenuto");
+
         ADTConsList<Integer> l11 = l3.cons(6);
         ADTConsList<Integer> l12 = l11.cons(10);
         ADTConsList<Integer> l13 = l12.cons(11);
+
         System.out.println(l13.print());
         ADTConsList<Integer> l14 = l13.append(l10);
         System.out.println("Append: " + l14.print());
+
         System.out.println("Reversed: " + l14.reverse().print());
         System.out.println("Aggiornato il primo 6 con 100: " + l14.updateFirst(6, 100).print());
+
         System.out.println("Aggiornati tutti i 6 con 100: " + l14.updateAll(6, 100).print());
         ADTConsList<Integer> l15 = ADTConsList.EMPTY_LIST.cons(1);
         ADTConsList<Integer> l16 = l15.cons(1);
