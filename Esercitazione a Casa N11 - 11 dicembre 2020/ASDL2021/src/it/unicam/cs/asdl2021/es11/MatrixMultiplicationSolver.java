@@ -31,15 +31,12 @@ public class MatrixMultiplicationSolver {
      *          10x100, A_{1} = 100x5, A_{2} = 5x50
      * @throws NullPointerException     se la lista passata è null
      * @throws IllegalArgumentException se la lista p contiene meno di due elementi (cioè deve contenere almeno
-     * una matrice. Nel caso di una unica matrice la soluzione è 0 e la parentesizzazione è la matrice
-     * stessa, cioè "A_{0}")
+     *                                  una matrice. Nel caso di una unica matrice la soluzione è 0 e la
+     *                                  parentesizzazione è la matrice stessa, cioè "A_{0}")
      */
     public MatrixMultiplicationSolver(List<Integer> p) {
-        if (p == null)
-            throw new NullPointerException("Lista nulla");
-        if (p.size() <= 1)
-            throw new IllegalArgumentException(
-                    "Lista di dimensione non valida");
+        if (p == null) throw new NullPointerException("Lista nulla");
+        if (p.size() <= 1) throw new IllegalArgumentException("Lista di dimensione non valida");
         this.p = p;
         this.m = new int[p.size() - 1][p.size() - 1];
         this.b = new int[p.size() - 1][p.size() - 1];
@@ -47,11 +44,37 @@ public class MatrixMultiplicationSolver {
     }
 
     /*
-     * Risolve il problema della parentesizzazione ottima con la programmazione
-     * dinamica.
+     * Risolve il problema della parentesizzazione ottima con la programmazione dinamica.
      */
     private void solve() {
-        // TODO implementare
+        // iniziazione matrici
+        for (int i = 0; i < p.size() - 1; i++) {
+            m[i][i] = 0;
+            b[i][i] = -1;
+        }
+
+        for (int level = 1; level < p.size() - 1; level++) {
+            for (int i = 0; i < p.size() - 1 - level; i++) {
+                int j = level + i;
+
+                //inizializzo valori base
+                m[i][j] = -1;
+                b[i][j] = -1;
+
+                for (int k = i; k < j; k++) {
+                    int cost = m[i][k] + m[k+1][j] + p.get(i).intValue() *  p.get(k+1).intValue() * p.get(j+1).intValue();
+
+                    //comparo i costi
+                    if(m[i][j] == -1 || cost < m[i][j]) {
+                        //salvo il costo minore
+                        m[i][j] = cost;
+
+                        //salvo k
+                        b[i][j] = k;
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -87,8 +110,26 @@ public class MatrixMultiplicationSolver {
      * appositamente durante il processo di calcolo del costo minimo
      */
     private String traceBack(int i, int j) {
-        // TODO implementare ricorsivamente
-        return null;
+        if (i == j)
+            return "A_{" + i + "}";
+
+        return "(" + traceBack(i, b[i][j]) /* b[i][j]== k */ + " x " + traceBack(b[i][j] + 1, j) + ")";
     }
 
+    //test visione matrici
+    public void printMats() {
+        for (int i = 0; i < p.size() - 1; i++) {
+            for (int j = 0; j < p.size() - 1; j++) {
+                System.out.print("[" + b[i][j] + "]");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        for (int i = 0; i < p.size() - 1; i++) {
+            for (int j = 0; j < p.size() - 1; j++) {
+                System.out.print("[" + m[i][j] + "]");
+            }
+            System.out.println();
+        }
+    }
 }

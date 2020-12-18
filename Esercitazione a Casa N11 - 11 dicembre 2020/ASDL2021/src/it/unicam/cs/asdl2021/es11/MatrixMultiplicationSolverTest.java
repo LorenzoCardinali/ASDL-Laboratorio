@@ -11,14 +11,11 @@ class MatrixMultiplicationSolverTest {
 
     @Test
     final void testMatrixMultiplicationSolver() {
-        assertThrows(NullPointerException.class,
-                () -> new MatrixMultiplicationSolver(null));
+        assertThrows(NullPointerException.class, () -> new MatrixMultiplicationSolver(null));
         ArrayList<Integer> p = new ArrayList<Integer>();
-        assertThrows(IllegalArgumentException.class,
-                () -> new MatrixMultiplicationSolver(p));
+        assertThrows(IllegalArgumentException.class, () -> new MatrixMultiplicationSolver(p));
         p.add(30);
-        assertThrows(IllegalArgumentException.class,
-                () -> new MatrixMultiplicationSolver(p));
+        assertThrows(IllegalArgumentException.class, () -> new MatrixMultiplicationSolver(p));
         p.add(20);
         MatrixMultiplicationSolver s = new MatrixMultiplicationSolver(p);
         assertTrue(s.getOptimalCost() == 0);
@@ -40,9 +37,13 @@ class MatrixMultiplicationSolverTest {
         p.add(20);
         p.add(25);
         MatrixMultiplicationSolver s = new MatrixMultiplicationSolver(p);
+        s.printMats();
+        System.out.println();
+        System.out.println(s.getOptimalParenthesization());
+        System.out.println();
+        System.out.println(s.getOptimalCost());
         assertTrue(s.getOptimalCost() == 15125);
-        assertTrue(s.getOptimalParenthesization().equals(
-                "((A_{0} x (A_{1} x A_{2})) x ((A_{3} x A_{4}) x A_{5}))"));
+        assertTrue(s.getOptimalParenthesization().equals("((A_{0} x (A_{1} x A_{2})) x ((A_{3} x A_{4}) x A_{5}))"));
     }
 
     @Test
@@ -54,8 +55,6 @@ class MatrixMultiplicationSolverTest {
         p.add(1050);
         MatrixMultiplicationSolver s = new MatrixMultiplicationSolver(p);
         assertTrue(s.getOptimalCost() == 187500);
-        assertTrue(s.getOptimalParenthesization()
-                .equals("((A_{0} x A_{1}) x A_{2})"));
+        assertTrue(s.getOptimalParenthesization().equals("((A_{0} x A_{1}) x A_{2})"));
     }
-
 }

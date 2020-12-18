@@ -34,8 +34,7 @@ public class LCSSolver {
      */
     public LCSSolver(String x, String y) {
         if (x == null || y == null)
-            throw new NullPointerException(
-                    "Creazione di un solver con una o due stringhe null");
+            throw new NullPointerException("Creazione di un solver con una o due stringhe null");
         this.x = x;
         this.y = y;
         // creo la matrice
@@ -63,7 +62,21 @@ public class LCSSolver {
      * prima volta il problema verrà considerato risolto.
      */
     public void solve() {
-        // TODO implementare
+        if (this.isSolved == true) return;
+
+        for (int i = 1; i < this.x.length() + 1; i++) {
+            for (int j = 1; j < this.y.length() + 1; j++) {
+                if (x.charAt(i - 1) == y.charAt(j - 1)) {
+                    m[i][j] = m[i - 1][j - 1] + 1;
+                } else if (m[i - 1][j] >= m[i][j - 1]) {
+                    m[i][j] = m[i - 1][j];
+                } else {
+                    m[i][j] = m[i][j - 1];
+                }
+            }
+        }
+
+        this.isSolved = true;
     }
 
     /**
@@ -111,8 +124,18 @@ public class LCSSolver {
      * soluzione ottima, ma va usata la stessa matrice m
      */
     private String traceBack(int i, int j) {
-        // TODO implementare ricorsivamente
-        return null;
+        if (i ==0 || j == 0){
+            return "";
+        }
+
+        if(this.x.charAt(i-1) == this.y.charAt(j-1)) {
+            return this.traceBack(i-1, j -1) + this.x.charAt(i-1);
+        }
+        if(m[i-1][j] >= m[i][j-1]) {
+            return this.traceBack(i-1,j);
+        } else {
+            return this.traceBack(i,j-1);
+        }
     }
 
     /**
@@ -124,12 +147,11 @@ public class LCSSolver {
      * @throws NullPointerException se z è null
      */
     public boolean isCommonSubsequence(String z) {
-        if (z == null)
-            throw new NullPointerException("Test di una sequenza nulla");
+        if (z == null) throw new NullPointerException("Test di una sequenza nulla");
         return isSubsequence(z, this.x) && isSubsequence(z, this.y);
     }
 
-    /*
+    /**
      * Determina se una stringa è sottosequenza di un'altra stringa.
      *
      * @param z la stringa da testare
@@ -141,5 +163,14 @@ public class LCSSolver {
     private static boolean isSubsequence(String z, String w) {
         // TODO implementare ricorsivamente
         return false;
+    }
+
+    public void printMat() {
+        for (int i = 0; i < x.length() + 1; i++) {
+            for (int j = 0; j < y.length() + 1; j++) {
+                System.out.print("[" + m[i][j] + "]");
+            }
+            System.out.println();
+        }
     }
 }
