@@ -1,4 +1,4 @@
-package it.unicam.cs.asdl2021.mp1sol;
+package it.unicam.cs.asdl2021.mp2.Task3;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -14,9 +14,9 @@ import java.util.NoSuchElementException;
  * Duplicated elements are permitted while <code>null</code> elements are not
  * permitted.
  *
- * @author Template: Luca Tesei, Implementation:
- * <p>
- * Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
+ * @author Template: Luca Tesei
+ * @Implementation: Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
+ *
  */
 public class TernaryHeapMinPriorityQueue {
 
@@ -25,7 +25,7 @@ public class TernaryHeapMinPriorityQueue {
      * position 0 (the JUnit tests will assume so). You have to adapt
      * child/parent indexing formulas consequently.
      */
-    private final ArrayList<PriorityQueueElement> heap;
+    private ArrayList<PriorityQueueElement> heap;
 
     /**
      * Create an empty queue.
