@@ -99,7 +99,7 @@ public class GraphEdge<L> {
      *         Double.NaN
      */
     public boolean hasWeight() {
-        return this.weight != Double.NaN;
+        return !Double.isNaN(this.weight);
     }
 
     /**

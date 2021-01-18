@@ -1,10 +1,18 @@
 package it.unicam.cs.asdl2021.mp2.Task4;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Class that solves an instance of the the El Mamun's Caravan problem using
  * dynamic programming.
  * <p>
  * Template: Daniele Marchei and Luca Tesei
+ *
  * @Implementation: Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
  */
 public class ElMamunCaravanSolver {
@@ -30,10 +38,13 @@ public class ElMamunCaravanSolver {
      * @throws NullPointerException if the expression is null
      */
     public ElMamunCaravanSolver(Expression expression) {
-        if (expression == null)
-            throw new NullPointerException("Creazione di solver con expression null");
+        if (expression == null) throw new NullPointerException("Creazione di solver con expression null.");
         this.expression = expression;
-        // TODO implementare
+        int size = this.expression.size();
+
+        this.table = new Integer[size][size];
+        this.tracebackTable = new Integer[size][size];
+        this.solved = false;
     }
 
     /**
@@ -54,7 +65,50 @@ public class ElMamunCaravanSolver {
      * @throws NullPointerException if the objective function is null
      */
     public void solve(ObjectiveFunction function) {
-        // TODO implementare
+        if (function == null) throw new NullPointerException("Funzione nulla.");
+
+        // Variabile di supporto (contiene il size dell'espressione)
+        int size = this.expression.size();
+
+        // Riempio la matrice con i valori numerici dell'espressione
+        for (int i = 0; i < size; i += 2) {
+            this.table[i][i] = (Integer) this.expression.get(i).getValue();
+        }
+
+        // For che genstisce l'avanzamento del livello in cui l'algoritmo sta lavorando
+        for (int level = 0; level < size - 2; level += 2) {
+            // For che genstisce l'avanzamento di i
+            for (int i = 0; i < size - level - 2; i += 2) {
+                // Avanzamento di j dipendente da i e level
+                int j = i + level + 2;
+
+                // Lista di supporto per immagazzinare i valori calcolati
+                List<Integer> tempList = new ArrayList<>();
+
+                // For che genstisce l'avanzamento di k
+                for (int k = 0; i + k + 2 <= j; k += 2) {
+
+                    // Valori da calcolare
+                    Integer a = this.table[i][i + k], b = this.table[i + k + 2][j];
+
+                    // Eseguo il calcolo basandomi sul valore di e[i + k + 1]
+                    // (moltiplicazione o addizione)
+                    if (this.expression.get(i + k + 1).getValue().equals("+")) {
+                        tempList.add(a + b);
+                    } else if (this.expression.get(i + k + 1).getValue().equals("*")) {
+                        tempList.add(a * b);
+                    }
+                }
+                // Ricavo il "best"
+                this.table[i][j] = function.getBest(tempList);
+
+                // Ricavo il k equivalente all'indice del "best"
+                this.tracebackTable[i][j] = function.getBestIndex(tempList) * 2;
+            }
+        }
+
+        // Algoritmo risolto
+        this.solved = true;
     }
 
     /**
@@ -66,8 +120,10 @@ public class ElMamunCaravanSolver {
      * @throws IllegalStateException if the problem has never been solved
      */
     public int getOptimalSolution() {
-        // TODO implementare
-        return -1;
+        if (!this.isSolved()) throw new IllegalArgumentException("Problema mai stato risolto.");
+
+        // Ritorno la soluzione migliore (table[0][size -1])
+        return this.table[0][this.expression.size() - 1];
     }
 
     /**
@@ -86,8 +142,11 @@ public class ElMamunCaravanSolver {
      * @throws IllegalStateException if the problem has never been solved
      */
     public String getOptimalParenthesization() {
-        // TODO implementare
-        return null;
+        if (!this.isSolved()) throw new IllegalArgumentException("Problema mai stato risolto.");
+
+        // Richiamo il metodo di ricorsione per ricostruire la parentesizzazione
+        // (traceback tra [0] e [size-1])
+        return traceBack(0, this.expression.size() - 1);
     }
 
     /**
@@ -105,6 +164,20 @@ public class ElMamunCaravanSolver {
         return "ElMamunCaravanSolver for " + expression;
     }
 
-    // TODO implementare: inserire eventuali metodi privati per rendere
-    // l'implementazione più modulare
+    private String traceBack(int i, int j) {
+
+        // Stampo e[i]
+        if (i == j) return this.expression.get(i).toString();
+
+        // Stringa del segno di moltiplicazione o addizione
+        String op = this.expression.get(i + this.tracebackTable[i][j] + 1).toString();
+
+        // Ricorsione del metodo di traceBack
+        /** "( x e[i + k + 1] y )"
+         * x -> traceback( e[i] , e[i + k] )
+         * e[i + k + 1] -> segno di moltiplicazione o addizione
+         * y -> traceback( e[i + k + 2] , e[j] )
+         */
+        return "(" + traceBack(i, i + this.tracebackTable[i][j]) + op + traceBack(i + this.tracebackTable[i][j] + 2, j) + ")";
+    }
 }

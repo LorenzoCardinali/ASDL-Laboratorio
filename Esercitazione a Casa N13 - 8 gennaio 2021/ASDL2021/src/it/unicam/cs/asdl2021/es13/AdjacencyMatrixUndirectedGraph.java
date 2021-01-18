@@ -1,38 +1,11 @@
 package it.unicam.cs.asdl2021.es13;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-/**
- * Classe che implementa un grafo non orientato tramite matrice di adiacenza.
- * Non sono accettate etichette dei nodi null e non sono accettate etichette
- * duplicate nei nodi (che in quel caso sono lo stesso nodo).
- * <p>
- * I nodi sono indicizzati da 0 a nodeCount() - 1 seguendo l'ordine del loro
- * inserimento (0 è l'indice del primo nodo inserito, 1 del secondo e così via)
- * e quindi in ogni istante la matrice di adiacenza ha dimensione nodeCount() *
- * nodeCount(). La matrice, sempre quadrata, deve quindi aumentare di dimensione
- * ad ogni inserimento di un nodo. Per questo non è rappresentata tramite array
- * ma tramite ArrayList.
- * <p>
- * Gli oggetti GraphNode<L>, cioè i nodi, sono memorizzati in una mappa che
- * associa ad ogni nodo l'indice assegnato in fase di inserimento. Il dominio
- * della mappa rappresenta quindi l'insieme dei nodi.
- * <p>
- * Gli archi sono memorizzati nella matrice di adiacenza. A differenza della
- * rappresentazione standard con matrice di adiacenza, la posizione i,j della
- * matrice non contiene un flag di presenza, ma è null se i nodi i e j non sono
- * collegati da un arco e contiene un oggetto della classe GraphEdge<L> se lo
- * sono. Tale oggetto rappresenta l'arco. Un oggetto uguale (secondo equals) e
- * con lo stesso peso (se gli archi sono pesati) deve essere presente nella
- * posizione j, i della matrice.
- * <p>
- * Questa classe non supporta i metodi di cancellazione di nodi e archi, ma
- * supporta tutti i metodi che usano indici, utilizzando l'indice assegnato a
- * ogni nodo in fase di inserimento.
- *
- * @author Template: Luca Tesei
- * @Implementation: Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
- */
 public class AdjacencyMatrixUndirectedGraph<L> extends Graph<L> {
     /*
      * Le seguenti variabili istanza sono protected al solo scopo di agevolare
@@ -54,12 +27,6 @@ public class AdjacencyMatrixUndirectedGraph<L> extends Graph<L> {
     //contatore archi
     private int edgeCount;
     private GraphEdge<L> edge;
-
-    /*
-     * NOTA: per tutti i metodi che ritornano un set utilizzare la classe
-     * HashSet<E> per creare l'insieme risultato. Questo garantisce un buon
-     * funzionamento dei test JUnit che controllano l'uguaglianza tra insiemi
-     */
 
     /**
      * Crea un grafo vuoto.
@@ -261,7 +228,7 @@ public class AdjacencyMatrixUndirectedGraph<L> extends Graph<L> {
         if (node == null) throw new NullPointerException("Nodo nullo");
         if (!this.containsNode(node)) throw new IllegalArgumentException("Nodo non presente");
 
-        Set<GraphNode<L>> adjNodes = new HashSet<>();
+        Set<GraphNode<L>> adjNodes = new HashSet<GraphNode<L>>();
 
         for (GraphEdge<L> tmp : this.matrix.get(this.getNodeIndexOf(node.getLabel()))) {
             if (tmp != null) adjNodes.add(tmp.getNode2());
@@ -282,26 +249,18 @@ public class AdjacencyMatrixUndirectedGraph<L> extends Graph<L> {
      */
     @Override
     public Set<GraphEdge<L>> getEdges() {
-        if (this.edgeCount == 0) return new HashSet<>();
+        if (this.edgeCount == 0) return new HashSet<GraphEdge<L>>();
 
-        Set<GraphEdge<L>> edges = new HashSet<>();
+        Set<GraphEdge<L>> edges = new HashSet<GraphEdge<L>>();
 
         for (int i = 0; i < this.matrix.size(); i++) {
             for (int j = i; j < this.matrix.size(); j++) {
-                if (this.matrix.get(i).get(j) != null) edges.add(this.matrix.get(i).get(j));
+                if(this.matrix.get(i).get(j) != null) edges.add(this.matrix.get(i).get(j));
             }
         }
 
         return edges;
     }
-
-    /*
-    edges.addAll(this.matrix.get(i));
-
-    for(GraphEdge<L> tmp : this.matrix.get(i)) {
-        if (tmp != null) edges.add(tmp);
-    }
-     */
 
     /**
      * Aggiunge un arco a questo grafo.
@@ -322,8 +281,7 @@ public class AdjacencyMatrixUndirectedGraph<L> extends Graph<L> {
 
         if (edge.isDirected()) throw new IllegalArgumentException("Edge orientato non accettato.");
 
-        if (this.containsEdge(edge) || this.containsEdge(new GraphEdge(edge.getNode2(), edge.getNode1(), false)))
-            return false;
+        if (this.containsEdge(edge) || this.containsEdge(new GraphEdge(edge.getNode2(), edge.getNode1(), false))) return false;
 
         int indexLabel1 = this.getNodeIndexOf(edge.getNode1().getLabel());
         int indexLabel2 = this.getNodeIndexOf(edge.getNode2().getLabel());
@@ -359,8 +317,8 @@ public class AdjacencyMatrixUndirectedGraph<L> extends Graph<L> {
         if (this.edgeCount == 0) return false;
 
         for (int i = 0; i < this.nodeCount(); i++) {
-            for (GraphEdge<L> tmp : this.matrix.get(i)) {
-                if (tmp != null && tmp.equals(edge)) return true;
+            for(GraphEdge<L> tmp : this.matrix.get(i)) {
+                if(tmp!=null && tmp.equals(edge)) return true;
             }
         }
         return false;
@@ -381,9 +339,9 @@ public class AdjacencyMatrixUndirectedGraph<L> extends Graph<L> {
         if (node == null) throw new NullPointerException("Nodo nullo");
         if (!this.containsNode(node)) throw new IllegalArgumentException("Nodo non presente");
 
-        Set<GraphEdge<L>> edgesOf = new HashSet<>();
+        Set<GraphEdge<L>> edgesOf = new HashSet<GraphEdge<L>>();
 
-        for (GraphEdge<L> tmp : this.matrix.get(this.getNodeIndexOf(node.getLabel()))) {
+        for(GraphEdge<L> tmp : this.matrix.get(this.getNodeIndexOf(node.getLabel()))){
             if (tmp != null) edgesOf.add(tmp);
         }
 
@@ -395,24 +353,4 @@ public class AdjacencyMatrixUndirectedGraph<L> extends Graph<L> {
         throw new UnsupportedOperationException("Operazione non supportata in un grafo non orientato");
     }
 
-    /*
-    @Override
-    public void printAll() {
-        System.out.println("##################################\n");
-        System.out.println("\t" + nodesIndex + "\n");
-
-        for (int i = 0; i < this.nodeCount(); i++) {
-            System.out.print(i + " -> ");
-            for (Object tmp : this.matrix.get(i)) {
-                if (tmp instanceof GraphEdge)
-                    System.out.print("\t[" + ((GraphEdge<?>) tmp).getNode1().getLabel() + "-" + ((GraphEdge<?>) tmp).getNode2().getLabel() + " w:" + ((GraphEdge<?>) tmp).getWeight() + "] ");
-                else
-                    System.out.print("\t[" + tmp + "] ");
-            }
-            System.out.println("");
-        }
-
-        System.out.println("\n##################################");
-    }
-     */
 }

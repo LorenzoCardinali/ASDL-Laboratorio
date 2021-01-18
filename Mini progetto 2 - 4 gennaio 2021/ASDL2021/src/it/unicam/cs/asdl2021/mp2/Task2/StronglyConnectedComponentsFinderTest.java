@@ -3,13 +3,14 @@ package it.unicam.cs.asdl2021.mp2.Task2;
 import it.unicam.cs.asdl2021.mp2.Graph;
 import it.unicam.cs.asdl2021.mp2.GraphEdge;
 import it.unicam.cs.asdl2021.mp2.GraphNode;
+import it.unicam.cs.asdl2021.mp2.Task1.AdjacencyMatrixUndirectedGraph;
 import it.unicam.cs.asdl2021.mp2.Task1.MapAdjacentListDirectedGraph;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StronglyConnectedComponentsFinderTest {
 
@@ -58,7 +59,101 @@ class StronglyConnectedComponentsFinderTest {
         stronglyConnectedComponents.add(component2);
         stronglyConnectedComponents.add(component3);
         StronglyConnectedComponentsFinder<String> f = new StronglyConnectedComponentsFinder<String>();
-        assertTrue(f.findStronglyConnectedComponents(g).equals(stronglyConnectedComponents));
+
+        g.printAll();
+
+        Set<Set<GraphNode<String>>> test = f.findStronglyConnectedComponents(g);
+
+        /*
+        for (Set<GraphNode<String>> tmp : test) {
+            System.out.print("{");
+            for (GraphNode<String> tmp2 : tmp) {
+                System.out.print(" " + tmp2 + " ");
+            }
+            System.out.print("}\n");
+        }
+
+         */
+
+        assertTrue(test.equals(stronglyConnectedComponents));
+    }
+
+
+    @Test
+    void findStronglyConnectedComponents() {
+        assertThrows(NullPointerException.class,
+                () -> new StronglyConnectedComponentsFinder().findStronglyConnectedComponents(null));
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new StronglyConnectedComponentsFinder().findStronglyConnectedComponents(new AdjacencyMatrixUndirectedGraph<String>()));
+
+        Graph<String> g = new MapAdjacentListDirectedGraph();
+
+        GraphNode<String> nodeA = new GraphNode("A");
+        GraphNode<String> nodeB = new GraphNode("B");
+        GraphNode<String> nodeC = new GraphNode("C");
+        GraphNode<String> nodeD = new GraphNode("D");
+        GraphNode<String> nodeE = new GraphNode("E");
+        GraphNode<String> nodeF = new GraphNode("F");
+        GraphNode<String> nodeG = new GraphNode("G");
+        GraphNode<String> nodeH = new GraphNode("H");
+        GraphNode<String> nodeI = new GraphNode("I");
+
+        GraphEdge<String> edgeAB = new GraphEdge(nodeA, nodeB, true);
+        GraphEdge<String> edgeBC = new GraphEdge(nodeB, nodeC, true);
+        GraphEdge<String> edgeCD = new GraphEdge(nodeC, nodeD, true);
+        GraphEdge<String> edgeDA = new GraphEdge(nodeD, nodeA, true);
+        GraphEdge<String> edgeCE = new GraphEdge(nodeC, nodeE, true);
+        GraphEdge<String> edgeEF = new GraphEdge(nodeE, nodeF, true);
+        GraphEdge<String> edgeFG = new GraphEdge(nodeF, nodeG, true);
+        GraphEdge<String> edgeGE = new GraphEdge(nodeG, nodeE, true);
+        GraphEdge<String> edgeHG = new GraphEdge(nodeH, nodeG, true);
+        GraphEdge<String> edgeHI = new GraphEdge(nodeH, nodeI, true);
+
+        g.addNode(nodeA);
+        g.addNode(nodeB);
+        g.addNode(nodeC);
+        g.addNode(nodeD);
+        g.addNode(nodeE);
+        g.addNode(nodeF);
+        g.addNode(nodeG);
+        g.addNode(nodeH);
+        g.addNode(nodeI);
+
+        g.addEdge(edgeAB);
+        g.addEdge(edgeBC);
+        g.addEdge(edgeCD);
+        g.addEdge(edgeDA);
+        g.addEdge(edgeCE);
+        g.addEdge(edgeEF);
+        g.addEdge(edgeFG);
+        g.addEdge(edgeGE);
+        g.addEdge(edgeHG);
+        g.addEdge(edgeHI);
+
+        Set<Set<GraphNode<String>>> resultTest = new HashSet();
+        Set<GraphNode<String>> resultTestPart1 = new HashSet();
+        Set<GraphNode<String>> resultTestPart2 = new HashSet();
+        Set<GraphNode<String>> resultTestPart3 = new HashSet();
+        Set<GraphNode<String>> resultTestPart4 = new HashSet();
+
+        resultTestPart1.add(nodeH);
+        resultTestPart2.add(nodeI);
+        resultTestPart3.add(nodeA);
+        resultTestPart3.add(nodeD);
+        resultTestPart3.add(nodeC);
+        resultTestPart3.add(nodeB);
+        resultTestPart4.add(nodeE);
+        resultTestPart4.add(nodeG);
+        resultTestPart4.add(nodeF);
+
+        resultTest.add(resultTestPart1);
+        resultTest.add(resultTestPart2);
+        resultTest.add(resultTestPart3);
+        resultTest.add(resultTestPart4);
+
+        StronglyConnectedComponentsFinder<String> finder = new StronglyConnectedComponentsFinder();
+        assertEquals(resultTest, finder.findStronglyConnectedComponents(g));
     }
 
     @Test
@@ -165,6 +260,8 @@ class StronglyConnectedComponentsFinderTest {
         stronglyConnectedComponents.add(component1);
         stronglyConnectedComponents.add(component2);
         StronglyConnectedComponentsFinder<String> f = new StronglyConnectedComponentsFinder<String>();
+        //System.out.println(f.findStronglyConnectedComponents(g));
+        g.printAll();
         assertTrue(f.findStronglyConnectedComponents(g).equals(stronglyConnectedComponents));
     }
 
@@ -225,6 +322,8 @@ class StronglyConnectedComponentsFinderTest {
         stronglyConnectedComponents.add(component1);
         stronglyConnectedComponents.add(component2);
         StronglyConnectedComponentsFinder<String> f = new StronglyConnectedComponentsFinder<String>();
+        //System.out.println(f.findStronglyConnectedComponents(g));
+        g.printAll();
         assertTrue(f.findStronglyConnectedComponents(g).equals(stronglyConnectedComponents));
     }
 
@@ -309,7 +408,18 @@ class StronglyConnectedComponentsFinderTest {
         stronglyConnectedComponents.add(component3);
         stronglyConnectedComponents.add(component4);
         StronglyConnectedComponentsFinder<String> f = new StronglyConnectedComponentsFinder<String>();
-        assertTrue(f.findStronglyConnectedComponents(g).equals(stronglyConnectedComponents));
+        Set<Set<GraphNode<String>>> test = f.findStronglyConnectedComponents(g);
+        /*
+        for (Set<GraphNode<String>> tmp : test) {
+            for (GraphNode<String> tmp2 : tmp) {
+                System.out.print("\t[" + tmp + ",");
+            }
+            System.out.print("]\n");
+        }
+
+         */
+        g.printAll();
+        assertTrue(test.equals(stronglyConnectedComponents));
     }
 
 }

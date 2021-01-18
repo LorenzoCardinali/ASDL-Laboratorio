@@ -1,4 +1,4 @@
-package it.unicam.cs.asdl2021.es11;
+package it.unicam.cs.asdl2021.mp2.Task4;
 
 import java.util.List;
 
@@ -113,7 +113,10 @@ public class MatrixMultiplicationSolver {
         if (i == j)
             return "A_{" + i + "}";
 
-        return "(" + traceBack(i, b[i][j]) /* b[i][j]== k */ + " x " + traceBack(b[i][j] + 1, j) + ")";
+        return "(" +
+                traceBack(i, b[i][j]) /* b[i][j]== k */
+                + " x " +
+                traceBack(b[i][j] + 1, j) + ")";
     }
 
     //test visione matrici
@@ -127,7 +130,8 @@ public class MatrixMultiplicationSolver {
         System.out.println();
         for (int i = 0; i < p.size() - 1; i++) {
             for (int j = 0; j < p.size() - 1; j++) {
-                System.out.print("\t[" + m[i][j] + "\t]       ");
+                if(m[i][j] == 0) System.out.print("\t[    0   ]");
+                else System.out.print("\t[\t" + m[i][j] + "\t]");
             }
             System.out.println("");
         }

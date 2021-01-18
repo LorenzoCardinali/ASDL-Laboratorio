@@ -179,6 +179,9 @@ class AdjacencyMatrixUndirectedGraphTest {
         g.addEdge(esx);
         adjNodes.add(nxTest);
         adjNodes.add(nuTest);
+
+        g.printAll();
+
         assertTrue(g.getAdjacentNodesOf(nsTest).equals(adjNodes));
 
 

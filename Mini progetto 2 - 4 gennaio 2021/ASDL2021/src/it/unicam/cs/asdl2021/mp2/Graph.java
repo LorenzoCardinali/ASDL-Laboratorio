@@ -287,19 +287,17 @@ public abstract class Graph<L> {
      * Restituisce l'insieme di tutti gli archi entranti in un certo nodo in un
      * grafo orientato.
      *
-     * @param node
-     *                 il nodo di cui determinare tutti gli archi entranti
+     * @param node  il nodo di cui determinare tutti gli archi entranti
      *
      * @return un insieme contenente tutti gli archi entranti nel nodo con
      *         etichetta label in questo grafo orientato.
      *
-     * @throws UnsupportedOperationException
-     *                                           se il grafo su cui il metodo è
+     * @throws UnsupportedOperationException se il grafo su cui il metodo è
      *                                           chiamato non è orientato
-     * @throws IllegalArgumentException
-     *                                           se il nodo passato non esiste
-     * @throws NullPointerException
-     *                                           se il nodo passato è nullo
+     *
+     * @throws IllegalArgumentException se il nodo passato non esiste
+     *
+     * @throws NullPointerException e il nodo passato è nullo
      */
     public abstract Set<GraphEdge<L>> getIngoingEdgesOf(GraphNode<L> node);
 
@@ -308,14 +306,13 @@ public abstract class Graph<L> {
      * nodo. Nel caso di grafo orientato è la somma del numero di archi in
      * entrata e del numero di archi in uscita.
      *
-     * @param node
-     *                 il nodo di cui calcolare il grado
+     * @param node il nodo di cui calcolare il grado
+     *
      * @return il grado del nodo passato
      *
-     * @throws IllegalArgumentException
-     *                                      se il nodo passato non esiste
-     * @throws NullPointerException
-     *                                      se il nodo passato è nullo
+     * @throws IllegalArgumentException se il nodo passato non esiste
+     *
+     * @throws NullPointerException se il nodo passato è nullo
      */
     public int getDegreeOf(GraphNode<L> node) {
         if (!this.isDirected())
@@ -326,7 +323,6 @@ public abstract class Graph<L> {
     }
 
     public void printAll() {
-
     }
 
 }

@@ -16,7 +16,6 @@ import java.util.NoSuchElementException;
  *
  * @author Template: Luca Tesei
  * @Implementation: Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
- *
  */
 public class TernaryHeapMinPriorityQueue {
 
@@ -141,34 +140,21 @@ public class TernaryHeapMinPriorityQueue {
             throw new NullPointerException("Elemento nullo");
         }
 
-        boolean trovato = false;
-        int indexElement = 0;
-
-        //cerco l'elemento nel heap e se c'è acquisisco l'indice
-        while (indexElement < heap.size()) {
-            if (this.heap.get(indexElement).getPriority() == element.getPriority()) {
-                trovato = true;
-                break;
-            }
-            indexElement++;
-        }
-        if (!trovato) {
+        //cerco l'elemento nel heap utilizzando il suo indice
+        if (element.getHandle() < 0 || element.getHandle() > size()) {
             throw new NoSuchElementException("Elemento non presente");
         }
 
         //verifico la priorità
-        if (!(newPriority < heap.get(indexElement).getPriority())) {
+        if (!(Double.compare(newPriority, heap.get(element.getHandle()).getPriority()) <= 0)) {
             throw new IllegalArgumentException("Nuova priorità non abbastanza bassa");
         }
 
         //setto la nuova priorità
-        this.heap.get(indexElement).setPriority(newPriority);
-
-        //index del nodo dell'elemento
-        int last = parentIndex(indexElement);
+        this.heap.get(element.getHandle()).setPriority(newPriority);
 
         //Ricostruisco min-heap con il nuovo elemento
-        for (int i = last; i >= 0; i--) {
+        for (int i = element.getHandle(); i >= 0; i--) {
             heapify(i);
         }
     }
@@ -302,5 +288,4 @@ public class TernaryHeapMinPriorityQueue {
     protected ArrayList<PriorityQueueElement> getTernaryHeap() {
         return this.heap;
     }
-
 }

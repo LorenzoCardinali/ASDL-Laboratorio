@@ -19,8 +19,7 @@ import java.util.Set;
  * 
  * @author Luca Tesei
  *
- * @param <L>
- *                il tipo delle etichette dei nodi del grafo
+ * @param <L> il tipo delle etichette dei nodi del grafo
  */
 public class SimpleDijkstraShortestPathComputer<L> {
 

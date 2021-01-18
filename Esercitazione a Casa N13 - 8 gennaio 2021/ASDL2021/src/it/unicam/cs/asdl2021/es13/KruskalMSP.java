@@ -13,8 +13,7 @@ import java.util.Set;
  * @author Template: Luca Tesei, Implementation: INSERIRE NOME E COGNOME DELLO
  *         STUDENTE - INSERIRE ANCHE L'EMAIL xxxx@studenti.unicam.it
  * 
- * @param <L>
- *                etichette dei nodi del grafo
+ * @param <L> etichette dei nodi del grafo
  *
  */
 public class KruskalMSP<L> {

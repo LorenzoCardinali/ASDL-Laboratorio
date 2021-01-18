@@ -3,42 +3,11 @@
  */
 package it.unicam.cs.asdl2021.es13;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-/**
- * Implementazione della classe astratta {@code Graph<L>} che realizza un grafo
- * orientato. Non sono accettate etichette dei nodi null e non sono accettate
- * etichette duplicate nei nodi (che in quel caso sono lo stesso nodo).
- *
- * Per la rappresentazione viene usata una variante della rappresentazione con
- * liste di adiacenza. A differenza della rappresentazione standard si usano
- * strutture dati più efficienti per quanto riguarda la complessità in tempo
- * della ricerca se un nodo è presente (pseudocostante, con tabella hash) e se
- * un arco è presente (pseudocostante, con tabella hash). Lo spazio occupato per
- * la rappresentazione risultà tuttavia più grande di quello che servirebbe con
- * la rappresentazione standard.
- *
- * Le liste di adiacenza sono rappresentate con una mappa (implementata con
- * tabelle hash) che associa ad ogni nodo del grafo i nodi adiacenti. In questo
- * modo il dominio delle chiavi della mappa è l'insieme dei nodi, su cui è
- * possibile chiamare il metodo contains per testare la presenza o meno di un
- * nodo. Ad ogni chiave della mappa, cioè ad ogni nodo del grafo, non è
- * associata una lista concatenata dei nodi collegati, ma un set di oggetti
- * della classe GraphEdge<L> che rappresentano gli archi uscenti dal nodo: in
- * questo modo la rappresentazione riesce a contenere anche l'eventuale peso
- * dell'arco (memorizzato nell'oggetto della classe GraphEdge<L>). Per
- * controllare se un arco è presenta basta richiamare il metodo contains in
- * questo set. I test di presenza si basano sui metodi equals ridefiniti per
- * nodi e archi nelle classi GraphNode<L> e GraphEdge<L>.
- *
- * Questa classe non supporta le operazioni di rimozione di nodi e archi e le
- * operazioni indicizzate di ricerca di nodi e archi.
- *
- * @author Template: Luca Tesei
- * @Implementation: Lorenzo Cardinali - lorenz.cardinali@studenti.unicam.it
- *
- * @param <L> etichette dei nodi del grafo
- */
 public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
 
     /*
@@ -48,12 +17,6 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
      * istanza è protected solo per scopi di test JUnit.
      */
     protected final Map<GraphNode<L>, Set<GraphEdge<L>>> adjacentLists;
-
-    /*
-     * NOTA: per tutti i metodi che ritornano un set utilizzare la classe
-     * HashSet<E> per creare l'insieme risultato. Questo garantisce un buon
-     * funzionamento dei test JUnit che controllano l'uguaglianza tra insiemi
-     */
 
     /**
      * Crea un grafo vuoto.
@@ -160,7 +123,7 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
         if (node == null) throw new NullPointerException("Nodo nullo");
         if (!this.containsNode(node)) throw new IllegalArgumentException("Nodo non presente");
 
-        Set<GraphNode<L>> preNodes = new HashSet<>();
+        Set<GraphNode<L>> preNodes = new HashSet<GraphNode<L>>();
 
         for (GraphEdge<L> tmp : this.getEdges()) {
             if (tmp.getNode2().equals(node)) {
@@ -173,7 +136,7 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
 
     @Override
     public Set<GraphEdge<L>> getEdges() {
-        Set<GraphEdge<L>> edges = new HashSet<>();
+        Set<GraphEdge<L>> edges = new HashSet<GraphEdge<L>>();
 
         for (GraphNode<L> tmp : this.getNodes()) edges.addAll(this.adjacentLists.get(tmp));
 
@@ -217,7 +180,7 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
         if (node == null) throw new NullPointerException("Nodo nullo");
         if (!this.containsNode(node)) throw new IllegalArgumentException("Nodo non presente");
 
-        Set<GraphEdge<L>> IngEdges = new HashSet<>();
+        Set<GraphEdge<L>> IngEdges = new HashSet<GraphEdge<L>>();
 
         for (GraphEdge<L> tmp : this.getEdges()) {
             if (tmp.getNode2().equals(node)) IngEdges.add(tmp);
@@ -225,5 +188,4 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
 
         return IngEdges;
     }
-
 }

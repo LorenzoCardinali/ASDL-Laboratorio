@@ -204,8 +204,7 @@ public class GraphNode<L> implements PriorityQueueElement {
      * Assegna un tempo di uscita da questo nodo durante una visita in
      * profondità.
      *
-     * @param time
-     *                 il tempo di uscita da assegnare
+     * @param time il tempo di uscita da assegnare
      */
     public void setExitingTime(int time) {
         this.exitingTime = time;

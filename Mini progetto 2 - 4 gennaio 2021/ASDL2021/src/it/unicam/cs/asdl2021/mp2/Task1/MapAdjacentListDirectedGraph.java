@@ -7,7 +7,10 @@ import it.unicam.cs.asdl2021.mp2.Graph;
 import it.unicam.cs.asdl2021.mp2.GraphEdge;
 import it.unicam.cs.asdl2021.mp2.GraphNode;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Implementazione della classe astratta {@code Graph<L>} che realizza un grafo
@@ -76,9 +79,8 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
     @Override
     public int edgeCount() {
         int count = 0;
-        Set<GraphNode<L>> nodes = this.adjacentLists.keySet();
 
-        for (GraphNode<L> tmp : nodes) {
+        for (GraphNode<L> tmp : this.adjacentLists.keySet()) {
             count += this.adjacentLists.get(tmp).size();
         }
 
@@ -131,9 +133,7 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
     public GraphNode<L> getNodeOf(L label) {
         if (label == null) throw new NullPointerException("Label nullo");
 
-        Set<GraphNode<L>> nodes = this.adjacentLists.keySet();
-
-        for (GraphNode<L> tmp : nodes) if (tmp.getLabel().equals(label)) return tmp;
+        for (GraphNode<L> tmp : this.adjacentLists.keySet()) if (tmp.getLabel().equals(label)) return tmp;
 
         return null;
     }
@@ -164,7 +164,7 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
         if (node == null) throw new NullPointerException("Nodo nullo");
         if (!this.containsNode(node)) throw new IllegalArgumentException("Nodo non presente");
 
-        Set<GraphNode<L>> preNodes = new HashSet<>();
+        Set<GraphNode<L>> preNodes = new HashSet<GraphNode<L>>();
 
         for (GraphEdge<L> tmp : this.getEdges()) {
             if (tmp.getNode2().equals(node)) {
@@ -177,7 +177,7 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
 
     @Override
     public Set<GraphEdge<L>> getEdges() {
-        Set<GraphEdge<L>> edges = new HashSet<>();
+        Set<GraphEdge<L>> edges = new HashSet<GraphEdge<L>>();
 
         for (GraphNode<L> tmp : this.getNodes()) edges.addAll(this.adjacentLists.get(tmp));
 
@@ -221,7 +221,7 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
         if (node == null) throw new NullPointerException("Nodo nullo");
         if (!this.containsNode(node)) throw new IllegalArgumentException("Nodo non presente");
 
-        Set<GraphEdge<L>> IngEdges = new HashSet<>();
+        Set<GraphEdge<L>> IngEdges = new HashSet<GraphEdge<L>>();
 
         for (GraphEdge<L> tmp : this.getEdges()) {
             if (tmp.getNode2().equals(node)) IngEdges.add(tmp);
@@ -230,4 +230,20 @@ public class MapAdjacentListDirectedGraph<L> extends Graph<L> {
         return IngEdges;
     }
 
+/*
+    @Override
+    public void printAll() {
+        System.out.println("##################################\n");
+        System.out.println("\t" + adjacentLists.keySet() + "\n");
+        for (GraphNode<L> tmp : adjacentLists.keySet()) {
+            System.out.print(tmp.getLabel() + " ~ ");
+            for (GraphEdge<L> tmp2 : adjacentLists.get(tmp)) {
+                System.out.print("\t[" + tmp2.getNode1().getLabel() + "->" + tmp2.getNode2().getLabel() + " w:" + tmp2.getWeight() + "] ");
+            }
+            System.out.println("");
+        }
+        System.out.println("\n##################################");
+    }
+
+ */
 }
